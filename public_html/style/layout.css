@@ -17,9 +17,10 @@ body {
 #page_content {
     height:70%;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
+    margin-top: 10px;
     margin-bottom: 15%;
+    background-color: black;
 }
 
 .navbar {
@@ -50,4 +51,8 @@ h1 {
     width: 50%;
     height: 35%;
     margin-bottom: 10px;
+}
+
+.post {
+    color: grey;
 }
