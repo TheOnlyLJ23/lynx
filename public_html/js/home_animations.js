@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 $("document").ready(function() {
-    
     $("#page_content").load("home.html", function () {
         var images = [];
     
