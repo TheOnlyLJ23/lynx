@@ -60,6 +60,7 @@ footer {
 }
 
 #title {
+    color: rgb(40, 65, 119);
     float: left;
     text-align: center;
 }

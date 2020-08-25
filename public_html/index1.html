@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Admin page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -15,8 +15,15 @@ and open the template in the editor.
             <h1> Hello World! </h1>
             <p> Welcome to the server side. </p>
         </div>
-        
-        <button type="button" id="send">Send</button>
+        <form action="">
+            <label for="my_file">Seleziona file:</label>
+            <input type="file" id="my_file" name="my_file">
+            <br>
+            <label for="post_text">Inserisci testo del post:</label>
+            <input type="text" id="post_text">
+            <br>
+            <input id="send" type="submit">
+        </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
     <script>
@@ -24,7 +31,11 @@ and open the template in the editor.
             var socket = io();
             $('#send').on('click', function(e) {
               e.preventDefault(); // prevents page reloading
-              socket.emit('send media');
+              var txt = $('#post_text').val();
+              var data = { caption: txt }
+              console.log('data: ' + data);
+              socket.emit('send media', data);
+              $('#post_text').val('');
               return false;
             });
         });

@@ -18,7 +18,8 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on('send media', () => {
+  socket.on('send media', function(data) {
+    console.log('Post text: ' + data.caption);
     console.log('button clicked');
   });
 });
