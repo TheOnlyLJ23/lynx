@@ -17,28 +17,51 @@ and open the template in the editor.
         </div>
         <form action="">
             <label for="my_file">Seleziona file:</label>
-            <input type="file" id="my_file" name="my_file">
+            <input type="file" id="my_file" name="my_file" onchange="encodeImageFileAsURL(this);">
             <br>
             <label for="post_text">Inserisci testo del post:</label>
             <input type="text" id="post_text">
             <br>
             <input id="send" type="submit">
         </form>
+        
+        <div id="imgTest"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
-    <script>
+    <script type="text/javascript">
         $(function () {
             var socket = io();
             $('#send').on('click', function(e) {
               e.preventDefault(); // prevents page reloading
               var txt = $('#post_text').val();
-              var data = { caption: txt }
-              console.log('data: ' + data);
+              var img = $('#imgTest img').attr('src');
+              var data = { image: img, caption: txt }
+              console.log(data);
               socket.emit('send media', data);
+              $('#imgTest').html('');
               $('#post_text').val('');
               return false;
             });
         });
+        
+        function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            
+            var fileReader = new FileReader();
+            
+            
+            fileReader.onloadend = function() {
+                var srcData = fileReader.result; // <--- data: base64
+                
+                var newImage = $('<img>');
+                newImage.attr('src', srcData);
+                newImage.attr('height', 250);
+                newImage.attr('width', 400);
+                
+                newImage.appendTo($('#imgTest'));
+            };
+            fileReader.readAsDataURL(file);
+        }
     </script>
     </body>
 </html>
