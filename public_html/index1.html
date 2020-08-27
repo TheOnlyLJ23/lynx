@@ -35,7 +35,7 @@ and open the template in the editor.
               e.preventDefault(); // prevents page reloading
               var txt = $('#post_text').val();
               var img = $('#imgTest img').attr('src');
-              var data = { image: img, caption: txt }
+              var data = { image: img, caption: txt};
               console.log(data);
               socket.emit('send media', data);
               $('#imgTest').html('');

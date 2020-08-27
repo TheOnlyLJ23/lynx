@@ -9,14 +9,24 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
 
+var users = [];
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public_html', 'index1.html'));
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('a user connected: ' + socket.id);
+  var user = socket.id;
+  users.push(user);
+  console.log("List of users: " + users.join());
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    var i = users.length;
+    while(i--) {
+        if(users[i] === socket.id) {         
+            users.splice(i, 1);
+        }
+    }
   });
   socket.on('send media', function(data) {
     console.log('Image: ' + data.image);
