@@ -10,6 +10,8 @@ var io = require('socket.io')(http);
 var path = require('path');
 
 var users = [];
+var images = [];
+var videos = [];
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public_html', 'index1.html'));
@@ -29,8 +31,7 @@ io.on('connection', (socket) => {
     }
   });
   socket.on('send media', function(data) {
-    console.log('Image: ' + data.image);
-    console.log('Post text: ' + data.caption);
+    console.log("What did I receive?");
   });
 });
 
