@@ -33,9 +33,21 @@ and open the template in the editor.
             var socket = io();
             $('#send').on('click', function(e) {
               e.preventDefault(); // prevents page reloading
+              var src;
+              var type;
               var txt = $('#post_text').val();
-              var img = $('#imgTest img').attr('src');
-              var data = { image: img, caption: txt};
+              if($('#imgTest').html() === '') {
+                  console.log('Sending a video');
+                  src = $('#videoTest video').attr('src');
+                  type = "video";
+              }
+              else if($('#videoTest').html() === '') {
+                  console.log('Sending an image');
+                  src = $('#imgTest img').attr('src');
+                  type = "image";
+              }
+              
+              var data = { source: src, caption: txt, file: type};
               console.log(data);
               socket.emit('send media', data);
               $('#imgTest').html('');
@@ -55,11 +67,13 @@ and open the template in the editor.
             
             var fileReader = new FileReader();
             
+            var return_val;
             
             fileReader.onloadend = function() {
                 var srcData = fileReader.result; // <--- data: base64
                 
                 var extension = file_name.substr( (file_name.lastIndexOf('.') +1) );
+                return_val = extension;
                 if(extension === 'jpg' || extension === 'png') {
                     
                     $('#videoTest').html('');
@@ -71,18 +85,19 @@ and open the template in the editor.
                     newImage.appendTo($('#imgTest'));
                 }
                 else if (extension === 'mp4'){
-                    console.log("It's a video! Source: " + srcData);
-                    var newIframe = $('<video></video>');
-                    newIframe.attr('src', srcData);
-                    newIframe.attr('height', 250);
-                    newIframe.attr('width', 400);
-                    newIframe.attr('controls');
+                    var newVideo = $('<video></video>');
+                    newVideo.attr('src', srcData);
+                    newVideo.attr('height', 250);
+                    newVideo.attr('width', 400);
                     
-                    newIframe.appendTo($('#videoTest'));
+                    newVideo.appendTo($('#videoTest'));
+                    
+                    newVideo.attr('controls', true);
                 }
                 
             };
             fileReader.readAsDataURL(file);
+            return return_val;
         }
     </script>
     </body>

@@ -31,7 +31,15 @@ io.on('connection', (socket) => {
     }
   });
   socket.on('send media', function(data) {
-    console.log("What did I receive?");
+    switch (data.file) {
+        case "image":
+            console.log("I received an image");
+            break;
+        case "video":
+            console.log("I received a video");
+            break;
+        default :
+    }
   });
 });
 
