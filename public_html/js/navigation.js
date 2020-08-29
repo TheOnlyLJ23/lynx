@@ -12,6 +12,18 @@ $("document").ready(function (){
             case "#home":
                 $("#page_content").load("home.html"); 
                 $("#page_content").css("background-color", "black");
+                console.log("Performing GET request");
+                const URL = "http://localhost:3000/images";
+                $.ajax({
+                    url: URL,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log("I have received this: " + data);
+                    },
+                    error: function(error) {
+                        console.log("Ooops, something went wrong: " + error);
+                    }
+                });
                 break;
             
             case "#about":

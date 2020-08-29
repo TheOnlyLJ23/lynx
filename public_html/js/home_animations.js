@@ -8,12 +8,10 @@ $("document").ready(function() {
         var images = [];
     
         $("#left_animation img").each(function() {
-            console.log($(this)[0]);
             images.push($(this)[0]);
         });
 
         $("#right_animation img").each(function() {
-            console.log($(this)[0]);
             images.push($(this)[0]);
         });
 
