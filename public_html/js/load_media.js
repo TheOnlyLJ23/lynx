@@ -80,7 +80,7 @@ app.get('/videos', cors(), (req, res) => {
         new_data = "No new videos for you atm, sorry";
     }
     res.statusCode = 200;
-    res.send(json);
+    res.send(new_data);
     res.end();
     
     videos.splice(0, 1);
