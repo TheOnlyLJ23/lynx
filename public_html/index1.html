@@ -17,12 +17,12 @@ and open the template in the editor.
         </div>
         <form action="">
             <label for="my_file">Seleziona file:</label>
-            <input type="file" id="my_file" name="my_file" onchange="encodeImageFileAsURL(this);">
+            <input type="file" id="my_file" name="my_file" onchange="encodeFileAsURL(this);">
             <br>
             <label for="post_text">Inserisci testo del post:</label>
-            <input type="text" id="post_text">
+            <input type="text" id="post_text" oninput="postTyped()">
             <br>
-            <input id="send" type="submit">
+            <input id="send" disabled type="submit">
         </form>
         <div id="videoTest"></div>
         <div id="imgTest"></div>
@@ -36,20 +36,24 @@ and open the template in the editor.
               var src;
               var type;
               var txt = $('#post_text').val();
-              if($('#imgTest').html() === '') {
+              if($('#imgTest').html() === '' && $('#videoTest').html() !== '') {
                   console.log('Sending a video');
                   src = $('#videoTest video').attr('src');
                   type = "video";
               }
-              else if($('#videoTest').html() === '') {
+              else if($('#videoTest').html() === '' && $('#imgTest').html() !== '') {
                   console.log('Sending an image');
                   src = $('#imgTest img').attr('src');
                   type = "image";
               }
-              
+              else if($('#videoTest').html() === '' && $('#imgTest').html() === '' && txt) {
+                  console.log('Sending a text-only post');
+                  src = "none";
+                  type = "text-only";
+              }
               var data = { source: src, caption: txt, file: type};
               console.log(data);
-              socket.emit('send media', data);
+              socket.emit('send post', data);
               $('#imgTest').html('');
               $('#videoTest').html('');
               $('#post_text').val('');
@@ -57,7 +61,7 @@ and open the template in the editor.
             });
         });
         
-        function encodeImageFileAsURL(element) {
+        function encodeFileAsURL(element) {
             
             $('#imgTest').html('');
             $('#videoTest').html('');
@@ -93,11 +97,15 @@ and open the template in the editor.
                     newVideo.appendTo($('#videoTest'));
                     
                     newVideo.attr('controls', true);
-                }
-                
+                }               
             };
             fileReader.readAsDataURL(file);
+            $("#send").removeAttr("disabled");
             return return_val;
+        }
+        
+        function postTyped() {
+            $('#send').removeAttr("disabled");
         }
     </script>
     </body>

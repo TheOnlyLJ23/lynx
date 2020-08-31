@@ -13,6 +13,7 @@ var cors = require('cors');
 var users = [];
 var images = [];
 var videos = [];
+var posts = [];
 
 var domains = ["http://localhost:8383/ricky_website/index.html", 
     "http://localhost:8383/ricky_website/index.html#home",
@@ -86,6 +87,30 @@ app.get('/videos', cors(), (req, res) => {
     videos.splice(0, 1);
 });
 
+app.get('/posts', cors(), (req, res) => {
+    req.on('error', (err) => {
+        console.error(err);
+        res.statusCode = 400;
+        res.end();
+    });
+    
+    res.on('error', (err) => {
+        console.error(err);
+    });
+    
+    var new_data;
+    if(posts.length > 0) {
+        new_data = JSON.stringify(posts[0]);
+    } else {
+        new_data = "No new posts for you atm, sorry";
+    }
+    res.statusCode = 200;
+    res.send(new_data);
+    res.end();
+    
+    posts.splice(0, 1);
+});
+
 io.on('connection', (socket) => {
   console.log('a user connected: ' + socket.id);
   var user = socket.id;
@@ -99,16 +124,17 @@ io.on('connection', (socket) => {
         }
     }
   });
-  socket.on('send media', function(data) {
+  socket.on('send post', function(data) {
     switch (data.file) {
+        
         case "image":
             images.push(data);
             break;
         case "video":
             videos.push(data);
             break;
-        default :
     }
+    posts.push(data);
   });
 });
 

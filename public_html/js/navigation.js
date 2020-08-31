@@ -6,6 +6,8 @@
 
 $("document").ready(function (){
     $("#page_content").css("background-color", "black");
+    var existing_posts = localStorage
+    if(localStorage)
     $(".navbar-nav a").on("click", function() {
         var link = $(this).attr("href");
         var param;
@@ -14,32 +16,9 @@ $("document").ready(function (){
                 $("#page_content").load("home.html"); 
                 $("#page_content").css("background-color", "black");
                 
-                param = "images";
-                var result;
-                var request = ajax(param);
-                request.done(function(res) {
-                    
-                    result = res;
-                    
-                    console.log("src: " + result.source);
-                    console.log("caption: " + result.caption);
-                    console.log("type: " + result.file);
-                    
-                    var newImage = {
-                        src: result.source,
-                        caption: result.caption,
-                        type: result.file
-                    }
-                    
-                    console.log("newImage: " + Object.values(newImage));
-                    var images = JSON.parse(localStorage.getItem("images"));
-                    if (images === null) images = [];
-
-                    images.push(JSON.stringify(newImage));
-                    localStorage.setItem("images", JSON.stringify(images));
-                }).fail(function () {
-                    console.log("ajax call failed...");
-                });
+                param = "posts";
+               
+                ajax(param);
                 
                 break;
             
@@ -62,28 +41,9 @@ $("document").ready(function (){
                 $("#page_content").load("videos.html");
                 $("#page_content").css("background-color", "black");
                 
-                var newVideo = {};
-                console.log("Performing GET request...");
-                URL = "http://localhost:3000/videos";
-                $.ajax({
-                    url: URL,
-                    type: 'GET',
-                    success: function(data) {
-                        
-                        newVideo.src = data.source;
-                        newVideo.caption = data.caption;
-                        newVideo.type = data.file;
-                    },
-                    error: function(error) {
-                        console.log("Ooops, something went wrong: " + error);
-                    }
-                });
+                param = "videos";
                 
-                var videos = JSON.parse(localStorage.getItem("videos"));
-                if (videos === null) videos = [];
-                videos.push(JSON.stringify(newVideo));
-                localStorage.setItem("videos", JSON.stringify(videos));
-                break;
+                ajax(param);
                 
             default:
         }
@@ -93,16 +53,115 @@ $("document").ready(function (){
 function ajax(param) {
     console.log("Performing GET request...");
     var URL = "http://localhost:3000/" + param;
-    var request = $.ajax({
+    $.ajax({
             url: URL,
             type: 'GET',
             success: function(data) {
-                console.log("data: " + data);
+                
+                var res = JSON.parse(data);
+                console.log(res);
+                if(res) {
+                    saveFile(param, res);
+                    switch(param) {
+                        case "images":
+                            /* load image in photogallery */
+                            break;
+                        case "videos":
+                            /* load video in videogallery */
+                            break;
+                        case "posts":
+                            loadPost(res);
+                    }
+                }
             },
             error: function(err) {
                 console.log("Ooops, something went wrong: " + err);
             }
         });
-    return request;
 }
+
+function saveFile(param, data) {
+    
+    var newFile = {
+        src: data.source,
+        caption: data.caption,
+        type: data.file
+    };
+     
+    console.log("new file: " + Object.values(newFile));
+    var files = JSON.parse(localStorage.getItem(param));
+    if (files === null) files = [];
+
+    files.push(JSON.stringify(newFile));
+    localStorage.setItem(param, JSON.stringify(files));
+            
+}
+
+function loadImage (res) {
+    var img_div = $('<div></div>');
+    img_div.addClass("image_post post");
+
+    var img = $('<img>');
+    img.attr('src', res.source);
+    img.attr('alt', "New Image");
+    img.css('width', "100%");
+    img.appendTo(img_div);
+
+    var caption_div = $('<div></div>');
+    caption_div.addClass("caption");
+    caption_div.appendTo(img_div);
+
+    var txt = $('<p></p>');
+    txt.text(res.caption);
+    txt.appendTo(img_div);
+
+    return img_div;
+}
+
+function loadVideo(res) {
+    
+    var video_div = $('<div></div>');
+    video_div.addClass("video_div");
+    
+    var newVideo = $('<video></video>');
+    newVideo.attr('src', res.source);
+
+    newVideo.attr('controls', true);
+    
+    return video_div;
+    
+}
+
+function loadTextOnly(res) {
+    var text_div = $('<div></div>');
+    text_div.addClass("text_post post");
+    
+    var text_p = $('<p></p>');
+    text_p.text(res.caption);
+    text_p.appendTo(text_div);
+       
+    return text_div;
+}
+
+function loadPost(res) {
+    
+    var newPost;
+    switch (res.file) {
+        case "image":
+            newPost = loadImage(res);
+            break;
+        case "video":
+            newPost = loadVideo(res);
+            break;
+        case "text-only":
+            newPost = loadTextOnly(res);
+            break;
+        default:
+   }
+   
+   newPost.prependTo($("#posts"));
+}
+
+
+
 
