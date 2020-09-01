@@ -36,17 +36,17 @@ and open the template in the editor.
               var src;
               var type;
               var txt = $('#post_text').val();
-              if($('#imgTest').html() === '' && $('#videoTest').html() !== '') {
+              if(!$('#imgTest').html() && $('#videoTest').html()) {
                   console.log('Sending a video');
                   src = $('#videoTest video').attr('src');
                   type = "video";
               }
-              else if($('#videoTest').html() === '' && $('#imgTest').html() !== '') {
+              else if(!$('#videoTest').html() && $('#imgTest').html()) {
                   console.log('Sending an image');
                   src = $('#imgTest img').attr('src');
                   type = "image";
               }
-              else if($('#videoTest').html() === '' && $('#imgTest').html() === '' && txt) {
+              else if(!$('#videoTest').html() && !$('#imgTest').html() && txt) {
                   console.log('Sending a text-only post');
                   src = "none";
                   type = "text-only";
@@ -97,7 +97,24 @@ and open the template in the editor.
                     newVideo.appendTo($('#videoTest'));
                     
                     newVideo.attr('controls', true);
-                }               
+                }
+                var removeFile = $('<button></button>');
+                removeFile.html("Rimuovi File");
+                removeFile.appendTo($("body"));
+                
+                removeFile.on('click', function () {
+                    if($("#imgTest").html()) {
+                        $("#imgTest").html('');
+                    } else if($("#videoTest").html()) {
+                        $("#videoTest").html('');
+                    }
+                    if(!$('#videoTest').html() && !$('#imgTest').html() && !$("#post_text").val()) {
+                        console.log("NO FILES NO TEXT -----> I WILL DISABLE THE SUBMIT BUTTON");
+                        $('#send').attr("disabled", "disabled");
+                    }
+                    removeFile.remove();
+                });
+                
             };
             fileReader.readAsDataURL(file);
             $("#send").removeAttr("disabled");
@@ -105,7 +122,13 @@ and open the template in the editor.
         }
         
         function postTyped() {
+            
             $('#send').removeAttr("disabled");
+            
+            if(!$('#videoTest').html() && !$('#imgTest').html() && !$("#post_text").val()) {
+                //console.log("I WILL DISABLE THE BUTTON");
+                $('#send').attr("disabled", "disabled");
+            }
         }
     </script>
     </body>
