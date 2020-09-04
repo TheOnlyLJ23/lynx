@@ -59,9 +59,9 @@ function ajax(param) {
             success: function(data) {
                 
                 var res = JSON.parse(data);
-                console.log("res, json: " + JSON.stringify(res));
+                
                 if(res) {
-                    saveFile(param, res);
+                    //saveFile(param, res);
                     switch(param) {
                         case "images":
                             /* load image in photogallery */
@@ -106,14 +106,16 @@ function loadImage (res) {
     img.attr('alt', "New Image");
     img.css('width', "100%");
     img.appendTo(img_div);
+    
+    if(res.caption) {
+        var caption_div = $('<div></div>');
+        caption_div.addClass("caption");
+        caption_div.appendTo(img_div);
 
-    var caption_div = $('<div></div>');
-    caption_div.addClass("caption");
-    caption_div.appendTo(img_div);
-
-    var txt = $('<p></p>');
-    txt.text(res.caption);
-    txt.appendTo(img_div);
+        var txt = $('<p></p>');
+        txt.text(res.caption);
+        txt.appendTo(img_div);
+    }
 
     return img_div;
 }
@@ -121,13 +123,22 @@ function loadImage (res) {
 function loadVideo(res) {
     
     var video_div = $('<div></div>');
-    video_div.addClass("video_div");
+    video_div.addClass("video_post post");
     
     var newVideo = $('<video></video>');
     newVideo.attr('src', res.source);
-
     newVideo.attr('controls', true);
+    newVideo.appendTo(video_div);
     
+    if(res.caption) {
+        var caption_div = $('<div></div>');
+        caption_div.addClass("caption");
+        caption_div.appendTo(video_div);
+
+        var txt = $('<p></p>');
+        txt.text(res.caption);
+        txt.appendTo(video_div);
+    }    
     return video_div;
     
 }
@@ -158,6 +169,7 @@ function loadPost(res) {
             break;
         default:
    }
+   console.log(newPost);
    if(newPost) {
     newPost.prependTo($("#posts"));
    }

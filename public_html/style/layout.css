@@ -54,6 +54,11 @@ footer {
     margin-bottom: 10px;
 }
 
+.video_post video{
+    max-width: 100%;
+    height: 100%;
+}
+
 .post {
     color: grey;
     margin-bottom: 10px;
