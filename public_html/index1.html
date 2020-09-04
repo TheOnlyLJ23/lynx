@@ -53,10 +53,11 @@ and open the template in the editor.
               }
               var data = { source: src, caption: txt, file: type};
               console.log(data);
-              socket.emit('send post', data);
+              socket.emit('send post', JSON.stringify(data));
               $('#imgTest').html('');
               $('#videoTest').html('');
               $('#post_text').val('');
+              if($("#remove_file")) $("#remove_file").remove();
               return false;
             });
         });
@@ -67,7 +68,6 @@ and open the template in the editor.
             $('#videoTest').html('');
             var file = element.files[0];
             var file_name = $('#my_file').val();
-            console.log("file: " + file_name);
             
             var fileReader = new FileReader();
             
@@ -100,6 +100,7 @@ and open the template in the editor.
                 }
                 var removeFile = $('<button></button>');
                 removeFile.html("Rimuovi File");
+                removeFile.attr("id", "remove_file");
                 removeFile.appendTo($("body"));
                 
                 removeFile.on('click', function () {
@@ -112,6 +113,7 @@ and open the template in the editor.
                         console.log("NO FILES NO TEXT -----> I WILL DISABLE THE SUBMIT BUTTON");
                         $('#send').attr("disabled", "disabled");
                     }
+                    console.log("REMOVING \"RIMUOVI FILE\" BUTTON");
                     removeFile.remove();
                 });
                 

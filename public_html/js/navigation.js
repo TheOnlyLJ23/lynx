@@ -6,7 +6,7 @@
 
 $("document").ready(function (){
     $("#page_content").css("background-color", "black");
-    var existing_posts = localStorage
+    var existing_posts = localStorage;
     if(localStorage)
     $(".navbar-nav a").on("click", function() {
         var link = $(this).attr("href");
@@ -59,7 +59,7 @@ function ajax(param) {
             success: function(data) {
                 
                 var res = JSON.parse(data);
-                console.log(res);
+                console.log("res, json: " + JSON.stringify(res));
                 if(res) {
                     saveFile(param, res);
                     switch(param) {
@@ -88,7 +88,7 @@ function saveFile(param, data) {
         type: data.file
     };
      
-    console.log("new file: " + Object.values(newFile));
+    
     var files = JSON.parse(localStorage.getItem(param));
     if (files === null) files = [];
 
@@ -158,8 +158,9 @@ function loadPost(res) {
             break;
         default:
    }
-   
-   newPost.prependTo($("#posts"));
+   if(newPost) {
+    newPost.prependTo($("#posts"));
+   }
 }
 
 
