@@ -6,8 +6,7 @@
 
 $("document").ready(function (){
     $("#page_content").css("background-color", "black");
-    var existing_posts = localStorage;
-    if(localStorage)
+    
     $(".navbar-nav a").on("click", function() {
         var link = $(this).attr("href");
         var param;
@@ -35,6 +34,11 @@ $("document").ready(function (){
             case "#photogallery":   
                 $("#page_content").load("photogallery.html");
                 $("#page_content").css("background-color", "black");
+                
+                param = "images";
+                
+                ajax(param);
+                
                 break;
                 
             case "#videos":
@@ -64,7 +68,7 @@ function ajax(param) {
                     //saveFile(param, res);
                     switch(param) {
                         case "images":
-                            /* load image in photogallery */
+                            loadImageInPhotoGallery(res);
                             break;
                         case "videos":
                             /* load video in videogallery */
@@ -97,7 +101,7 @@ function saveFile(param, data) {
             
 }
 
-function loadImage (res) {
+function loadImagePost(res) {
     var img_div = $('<div></div>');
     img_div.addClass("image_post post");
 
@@ -120,7 +124,7 @@ function loadImage (res) {
     return img_div;
 }
 
-function loadVideo(res) {
+function loadVideoPost(res) {
     
     var video_div = $('<div></div>');
     video_div.addClass("video_post post");
@@ -143,7 +147,7 @@ function loadVideo(res) {
     
 }
 
-function loadTextOnly(res) {
+function loadTextOnlyPost(res) {
     var text_div = $('<div></div>');
     text_div.addClass("text_post post");
     
@@ -159,13 +163,13 @@ function loadPost(res) {
     var newPost;
     switch (res.file) {
         case "image":
-            newPost = loadImage(res);
+            newPost = loadImagePost(res);
             break;
         case "video":
-            newPost = loadVideo(res);
+            newPost = loadVideoPost(res);
             break;
         case "text-only":
-            newPost = loadTextOnly(res);
+            newPost = loadTextOnlyPost(res);
             break;
         default:
    }
@@ -173,7 +177,48 @@ function loadPost(res) {
    if(newPost) {
     newPost.prependTo($("#posts"));
    }
+   
 }
+   
+function loadImageInPhotoGallery(res) {
+    
+    console.log(res);
+
+    var col_div = $('<div></div>');
+    col_div.addClass("col-md-4");
+
+    var thumb_div = $('<div></div>');
+    thumb_div.addClass("thumbnail");
+
+    var href = $('<a></a>');
+    href.attr("href", res.source);
+    href.attr("target", "_blank");
+
+    var img = $('<img>');
+    img.attr("src", res.source);
+    img.css("width", "100%");
+    img.appendTo(href);
+    
+    if(res.caption) {
+        img.attr("alt", res.caption);
+        var div_caption = $('<div></div>');
+        div_caption.addClass("caption");
+
+        var p_caption_text = $('<p></p>');
+        p_caption_text.text(res.caption);
+
+        p_caption_text.appendTo(div_caption);
+        div_caption.appendTo(href);
+    } else {
+        img.attr("alt", "Image with no caption");
+    }
+
+    
+    href.appendTo(thumb_div);
+    thumb_div.appendTo(col_div);
+    col_div.prependTo($("#gallery"));
+}
+
 
 
 
