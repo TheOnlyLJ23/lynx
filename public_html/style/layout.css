@@ -64,6 +64,22 @@ footer {
     margin-bottom: 10px;
 }
 
+#posts {
+    height: 500px;
+    overflow: auto;
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+#posts::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#posts {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
 #title {
     color: rgb(40, 65, 119);
     float: left;
