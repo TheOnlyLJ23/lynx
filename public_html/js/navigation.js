@@ -72,6 +72,7 @@ function ajax(param) {
                             break;
                         case "videos":
                             /* load video in videogallery */
+                            loadVideoInVideoGallery(res);
                             break;
                         case "posts":
                             loadPost(res);
@@ -181,7 +182,7 @@ function loadPost(res) {
 }
    
 function loadImageInPhotoGallery(res) {
-    console.log(res);
+    //console.log(res);
     
     if(res.source) {
     
@@ -221,6 +222,25 @@ function loadImageInPhotoGallery(res) {
         thumb_div.appendTo(col_div);
         col_div.prependTo($("#gallery"));
     }
+}
+
+function loadVideoInVideoGallery(res) {
+    /*
+    <div class="embed-responsive embed-responsive-16by9 video_div">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+    </div>
+     */
+       
+    var video_div = $('<div></div>');
+    video_div.addClass("embed-responsive embed-responsive-16by9 video_div");
+    
+    var video = $('<video></video>');
+    video.addClass("embed-responsive-item");
+    video.attr("src", res.source);
+    video.attr("controls", "controls");
+    
+    video.appendTo(video_div);
+    video_div.prependTo($("#videos"));
 }
 
 
