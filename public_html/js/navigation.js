@@ -284,7 +284,7 @@ function addPostToDB(res, db) {
     }
     
     transaction.onerror = function (event) {
-        console.log("Transaction failed: " + event)
+        console.log("Transaction failed: " + event);
     }
     var objectStore = transaction.objectStore("posts");
     var request = objectStore.add(res);
