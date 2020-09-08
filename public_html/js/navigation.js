@@ -5,6 +5,34 @@
  */
 
 $("document").ready(function (){
+    
+    if (!window.indexedDB) {
+        console.log("Your browser doesn't support a stable version of IndexedDB.");
+    } else {
+        console.log("IndexedDB is working fine, keep going!");
+    }
+    
+    var db;
+    
+    var request = window.indexedDB.open("MediaDatabase", 1);
+    
+    request.onerror = function (e) {
+        console.log("There was an error: " + e);
+    }
+    
+    request.onsuccess = function (e) {
+        db = e.target.result;
+    }
+    
+    request.onupgradeneeded = function(event) { 
+        
+        var db = event.target.result;
+
+        // Create an objectStore for this database
+        var postsDB = db.createObjectStore("posts", { autoIncrement: true });
+        
+    };
+    
     $("#page_content").css("background-color", "black");
     
     $(".navbar-nav a").on("click", function() {
@@ -17,7 +45,9 @@ $("document").ready(function (){
                 
                 param = "posts";
                
-                ajax(param);
+                ajax(param, db);
+                
+                
                 
                 break;
             
@@ -37,7 +67,7 @@ $("document").ready(function (){
                 
                 param = "images";
                 
-                ajax(param);
+                ajax(param, db);
                 
                 break;
                 
@@ -47,14 +77,14 @@ $("document").ready(function (){
                 
                 param = "videos";
                 
-                ajax(param);
+                ajax(param, db);
                 
             default:
         }
     })
 });
 
-function ajax(param) {
+function ajax(param, db) {
     console.log("Performing GET request...");
     var URL = "http://localhost:3000/" + param;
     $.ajax({
@@ -65,7 +95,7 @@ function ajax(param) {
                 var res = JSON.parse(data);
                 
                 if(res) {
-                    //saveFile(param, res);
+                    
                     switch(param) {
                         case "images":
                             loadImageInPhotoGallery(res);
@@ -77,6 +107,8 @@ function ajax(param) {
                         case "posts":
                             loadPost(res);
                     }
+                    
+                    addPostToDB(res, db);
                 }
             },
             error: function(err) {
@@ -244,6 +276,22 @@ function loadVideoInVideoGallery(res) {
 }
 
 
-
+function addPostToDB(res, db) {
+    var transaction = db.transaction(["posts"], "readwrite");
+    
+    transaction.oncomplete = function() {
+        console.log("Transaction completed!");
+    }
+    
+    transaction.onerror = function (event) {
+        console.log("Transaction failed: " + event)
+    }
+    var objectStore = transaction.objectStore("posts");
+    var request = objectStore.add(res);
+    
+    request.onsuccess = function (e) {
+        console.log("Added post: " + e.target.result.toString());
+    }
+}
 
 
