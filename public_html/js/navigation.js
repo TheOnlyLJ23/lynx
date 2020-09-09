@@ -18,20 +18,23 @@ $("document").ready(function (){
     
     request.onerror = function (e) {
         console.log("There was an error: " + e);
-    }
+    };
     
     request.onsuccess = function (e) {
         db = e.target.result;
-    }
+    };
     
     request.onupgradeneeded = function(event) { 
         
-        var db = event.target.result;
+        db = event.target.result;
 
         // Create an objectStore for this database
         var postsDB = db.createObjectStore("posts", { autoIncrement: true });
+        postsDB.createIndex("file", "file", {unique: false});           
         
     };
+    
+    
     
     $("#page_content").css("background-color", "black");
     
@@ -53,12 +56,12 @@ $("document").ready(function (){
             
             case "#about":
                 $("#page_content").load("about.html");
-                $("#page_content").css("background-color", "white")
+                $("#page_content").css("background-color", "white");
                 break;
                 
             case "#contacts":
                 $("#page_content").load("contacts.html");
-                $("#page_content").css("background-color", "white")
+                $("#page_content").css("background-color", "white");
                 break;
                 
             case "#photogallery":   
@@ -66,8 +69,10 @@ $("document").ready(function (){
                 $("#page_content").css("background-color", "black");
                 
                 param = "images";
-                
                 ajax(param, db);
+                
+                var images = getImagesFromDB(db);
+                console.log(Object.values(images));
                 
                 break;
                 
@@ -81,7 +86,7 @@ $("document").ready(function (){
                 
             default:
         }
-    })
+    });
 });
 
 function ajax(param, db) {
@@ -94,7 +99,7 @@ function ajax(param, db) {
                 
                 var res = JSON.parse(data);
                 
-                if(res) {
+                if(res.file) {
                     
                     switch(param) {
                         case "images":
@@ -115,23 +120,6 @@ function ajax(param, db) {
                 console.log("Ooops, something went wrong: " + err);
             }
         });
-}
-
-function saveFile(param, data) {
-    
-    var newFile = {
-        src: data.source,
-        caption: data.caption,
-        type: data.file
-    };
-     
-    
-    var files = JSON.parse(localStorage.getItem(param));
-    if (files === null) files = [];
-
-    files.push(JSON.stringify(newFile));
-    localStorage.setItem(param, JSON.stringify(files));
-            
 }
 
 function loadImagePost(res) {
@@ -257,12 +245,7 @@ function loadImageInPhotoGallery(res) {
 }
 
 function loadVideoInVideoGallery(res) {
-    /*
-    <div class="embed-responsive embed-responsive-16by9 video_div">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
-    </div>
-     */
-       
+           
     var video_div = $('<div></div>');
     video_div.addClass("embed-responsive embed-responsive-16by9 video_div");
     
@@ -277,21 +260,48 @@ function loadVideoInVideoGallery(res) {
 
 
 function addPostToDB(res, db) {
+    
+    console.log("Adding res: " + res);
     var transaction = db.transaction(["posts"], "readwrite");
     
     transaction.oncomplete = function() {
         console.log("Transaction completed!");
-    }
+    };
     
     transaction.onerror = function (event) {
         console.log("Transaction failed: " + event);
-    }
+    };
     var objectStore = transaction.objectStore("posts");
     var request = objectStore.add(res);
     
     request.onsuccess = function (e) {
         console.log("Added post: " + e.target.result.toString());
-    }
+    };
 }
 
+function getImagesFromDB(db) {
+    var images = [];
+    var transaction = db.transaction(["posts"], "readonly");
+    var objectStore = transaction.objectStore("posts");
+    var index = objectStore.index("file");
+    index.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
 
+        if(cursor) {
+            images.push(JSON.stringify(cursor.value));
+            cursor.continue();
+        } else {
+            console.log("Images: " + Object.values(images));
+        }
+    };
+
+    transaction.oncomplete = function() {
+        console.log("Transaction completed!");
+    };
+
+    transaction.onerror = function (event) {
+        console.log("Transaction failed: " + event);
+    };
+    
+    return images;
+}
