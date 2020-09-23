@@ -102,7 +102,7 @@ function ajax(param, db) {
                     
                     switch(param) {
                         case "images":
-                            loadImageInPhotoGallery(res);
+                            //loadImageInPhotoGallery(res);
                             break;
                         case "videos":
                             /* load video in videogallery */
@@ -307,6 +307,10 @@ function getImagesFromDB(db) {
             var img = JSON.parse(images[i]);
             console.log(img.time);
         }
+        
+        for(var i = 0; i < images.length || i < 9; i++) {
+            loadImageInPhotoGallery(JSON.parse(images[i]));
+        } 
         
         console.log("Transaction completed");
     };
