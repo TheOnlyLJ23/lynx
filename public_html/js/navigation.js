@@ -71,8 +71,7 @@ $("document").ready(function (){
                 param = "images";
                 ajax(param, db);
                 
-                var images = getImagesFromDB(db);
-                console.log(Object.values(images));
+                getImagesFromDB(db);    
                 
                 break;
                 
@@ -205,8 +204,6 @@ function loadImageInPhotoGallery(res) {
     //console.log(res);
     
     if(res.source) {
-    
-        console.log(res);
 
         var col_div = $('<div></div>');
         col_div.addClass("col-md-4");
@@ -262,6 +259,9 @@ function loadVideoInVideoGallery(res) {
 function addPostToDB(res, db) {
     
     console.log("Adding res: " + res);
+    
+    res.time = new Date();
+    console.log("Date: " + res.time);
     var transaction = db.transaction(["posts"], "readwrite");
     
     transaction.oncomplete = function() {
@@ -280,6 +280,7 @@ function addPostToDB(res, db) {
 }
 
 function getImagesFromDB(db) {
+    
     var images = [];
     var transaction = db.transaction(["posts"], "readonly");
     var objectStore = transaction.objectStore("posts");
@@ -291,17 +292,26 @@ function getImagesFromDB(db) {
             images.push(JSON.stringify(cursor.value));
             cursor.continue();
         } else {
-            console.log("Images: " + Object.values(images));
+            
+            images.sort(function(a, b) {
+                var elem1 = JSON.parse(a);
+                var elem2 = JSON.parse(b);
+                return new Date(Date.parse(elem1.time)).getTime() - new Date(Date.parse(elem2.time)).getTime();
+            });
         }
     };
 
     transaction.oncomplete = function() {
-        console.log("Transaction completed!");
+        
+        for (var i = 0; i < images.length; i++) {
+            var img = JSON.parse(images[i]);
+            console.log(img.time);
+        }
+        
+        console.log("Transaction completed");
     };
 
     transaction.onerror = function (event) {
         console.log("Transaction failed: " + event);
     };
-    
-    return images;
 }
