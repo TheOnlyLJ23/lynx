@@ -50,7 +50,7 @@ $("document").ready(function (){
                
                 ajax(param, db);
                 
-                
+                getFilesFromDB(db, param);
                 
                 break;
             
@@ -71,7 +71,7 @@ $("document").ready(function (){
                 param = "images";
                 ajax(param, db);
                 
-                getImagesFromDB(db);    
+                getFilesFromDB(db, param);    
                 
                 break;
                 
@@ -82,6 +82,8 @@ $("document").ready(function (){
                 param = "videos";
                 
                 ajax(param, db);
+                
+                getFilesFromDB(db, param);
                 
             default:
         }
@@ -95,25 +97,8 @@ function ajax(param, db) {
             url: URL,
             type: 'GET',
             success: function(data) {
-                
-                var res = JSON.parse(data);
-                
-                if(res.file) {
-                    
-                    switch(param) {
-                        case "images":
-                            //loadImageInPhotoGallery(res);
-                            break;
-                        case "videos":
-                            /* load video in videogallery */
-                            loadVideoInVideoGallery(res);
-                            break;
-                        case "posts":
-                            loadPost(res);
-                    }
-                    
+                    var res = JSON.parse(data);
                     addPostToDB(res, db);
-                }
             },
             error: function(err) {
                 console.log("Ooops, something went wrong: " + err);
@@ -279,9 +264,9 @@ function addPostToDB(res, db) {
     };
 }
 
-function getImagesFromDB(db) {
+function getFilesFromDB(db, param) {
     
-    var images = [];
+    var files = [];
     var transaction = db.transaction(["posts"], "readonly");
     var objectStore = transaction.objectStore("posts");
     var index = objectStore.index("file");
@@ -289,11 +274,11 @@ function getImagesFromDB(db) {
         var cursor = event.target.result;
 
         if(cursor) {
-            images.push(JSON.stringify(cursor.value));
+            files.push(JSON.stringify(cursor.value));
             cursor.continue();
         } else {
             
-            images.sort(function(a, b) {
+            files.sort(function(a, b) {
                 var elem1 = JSON.parse(a);
                 var elem2 = JSON.parse(b);
                 return new Date(Date.parse(elem1.time)).getTime() - new Date(Date.parse(elem2.time)).getTime();
@@ -303,15 +288,14 @@ function getImagesFromDB(db) {
 
     transaction.oncomplete = function() {
         
-        for (var i = 0; i < images.length; i++) {
-            var img = JSON.parse(images[i]);
-            console.log(img.time);
+        for(var i = 0; i < files.length || i < 20; i++) {
+            var file = JSON.parse(files[i]);
+            if(file.file === "image" && param === "images") { 
+                loadImageInPhotoGallery(file);
+            } else if (file.file === "video" && param === "videos") {
+                loadVideoInVideoGallery(file);
+            } else loadPost(file);
         }
-        
-        for(var i = 0; i < images.length || i < 9; i++) {
-            loadImageInPhotoGallery(JSON.parse(images[i]));
-        } 
-        
         console.log("Transaction completed");
     };
 
