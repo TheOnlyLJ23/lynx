@@ -11,9 +11,7 @@ var path = require('path');
 var cors = require('cors');
 
 var users = [];
-var images = [];
-var videos = [];
-var posts = [];
+var files = [];
 
 var domains = ["http://localhost:8383/ricky_website/index.html", 
     "http://localhost:8383/ricky_website/index.html#home",
@@ -51,16 +49,21 @@ app.get('/images', cors(), (req, res) => {
     });
     
     var new_data;
-    if(images.length > 0) {
-        new_data = images[0];
+    if(files.length > 0) {
+        var stop = false;
+        for (var i = 0; i < files.length && !stop; i++) {
+            if (files[i].file === "image") {
+                new_data = files[i];
+                files.splice(i, 1);
+                stop = true;
+            }
+        }
     } else {
         new_data = "No new images for you atm, sorry";
     }
     res.statusCode = 200;
     res.send(JSON.stringify(new_data));
     res.end();
-    
-    images.splice(0, 1);
 });
 
 app.get('/videos', cors(), (req, res) => {
@@ -75,16 +78,21 @@ app.get('/videos', cors(), (req, res) => {
     });
     
     var new_data;
-    if(videos.length > 0) {
-        new_data = videos[0];
+    if(files.length > 0) {
+        var stop = false;
+        for (var i = 0; i < files.length && !stop; i++) {
+            if (files[i].file === "video") {
+                new_data = files[i];
+                files.splice(i, 1);
+                stop = true;
+            }
+        }
     } else {
-        new_data = "No new videos for you atm, sorry";
+        new_data = "No new images for you atm, sorry";
     }
     res.statusCode = 200;
     res.send(JSON.stringify(new_data));
     res.end();
-    
-    videos.splice(0, 1);
 });
 
 app.get('/posts', cors(), (req, res) => {
@@ -99,8 +107,8 @@ app.get('/posts', cors(), (req, res) => {
     });
     
     var new_data;
-    if(posts.length > 0) {
-        new_data = posts[0];
+    if(files.length > 0) {
+        new_data = files[0];
     } else {
         new_data = "No new posts for you atm, sorry";
     }
@@ -108,7 +116,7 @@ app.get('/posts', cors(), (req, res) => {
     res.send(JSON.stringify(new_data));
     res.end();
     
-    posts.splice(0, 1);
+    files.splice(0, 1);
 });
 
 io.on('connection', (socket) => {
@@ -126,18 +134,8 @@ io.on('connection', (socket) => {
   });
   socket.on('send post', function(data) {
     var res = JSON.parse(data);
-    switch (res.file) {
-        
-        case "image":
-            images.push(res);
-            break;
-        case "video":
-            videos.push(res);
-            break;
-    }
     
-    
-    posts.push(res);
+    files.push(res);
   });
 });
 

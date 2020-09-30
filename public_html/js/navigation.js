@@ -6,6 +6,9 @@
 
 $("document").ready(function (){
     
+    $("#page_content").load("home.html");
+    $("#page_content").css("background-color", "black");
+    
     if (!window.indexedDB) {
         console.log("Your browser doesn't support a stable version of IndexedDB.");
     } else {
@@ -22,6 +25,7 @@ $("document").ready(function (){
     
     request.onsuccess = function (e) {
         db = e.target.result;
+        getFilesFromDB(db, "posts");
     };
     
     request.onupgradeneeded = function(event) { 
@@ -43,7 +47,7 @@ $("document").ready(function (){
         var param;
         switch (link) {
             case "#home":
-                $("#page_content").load("home.html"); 
+                $("#page_content").load("home.html");
                 $("#page_content").css("background-color", "black");
                 
                 param = "posts";
@@ -51,6 +55,9 @@ $("document").ready(function (){
                 ajax(param, db);
                 
                 getFilesFromDB(db, param);
+                
+                //animations();
+                
                 
                 break;
             
@@ -91,14 +98,16 @@ $("document").ready(function (){
 });
 
 function ajax(param, db) {
-    console.log("Performing GET request...");
+    //console.log("Performing GET request...");
     var URL = "http://localhost:3000/" + param;
     $.ajax({
             url: URL,
             type: 'GET',
             success: function(data) {
                     var res = JSON.parse(data);
-                    addPostToDB(res, db);
+                    if(res.file) {
+                        addPostToDB(res, db);
+                    }
             },
             error: function(err) {
                 console.log("Ooops, something went wrong: " + err);
@@ -178,7 +187,7 @@ function loadPost(res) {
             break;
         default:
    }
-   console.log(newPost);
+   //console.log(newPost);
    if(newPost) {
     newPost.prependTo($("#posts"));
    }
@@ -243,10 +252,10 @@ function loadVideoInVideoGallery(res) {
 
 function addPostToDB(res, db) {
     
-    console.log("Adding res: " + res);
+    //console.log("Adding res: " + res);
     
     res.time = new Date();
-    console.log("Date: " + res.time);
+    //console.log("Date: " + res.time);
     var transaction = db.transaction(["posts"], "readwrite");
     
     transaction.oncomplete = function() {
@@ -265,7 +274,6 @@ function addPostToDB(res, db) {
 }
 
 function getFilesFromDB(db, param) {
-    
     var files = [];
     var transaction = db.transaction(["posts"], "readonly");
     var objectStore = transaction.objectStore("posts");
@@ -287,14 +295,33 @@ function getFilesFromDB(db, param) {
     };
 
     transaction.oncomplete = function() {
-        
-        for(var i = 0; i < files.length || i < 20; i++) {
-            var file = JSON.parse(files[i]);
-            if(file.file === "image" && param === "images") { 
-                loadImageInPhotoGallery(file);
-            } else if (file.file === "video" && param === "videos") {
-                loadVideoInVideoGallery(file);
-            } else loadPost(file);
+        var images = [];
+        if(files.length > 0) {
+            for(var i = 0; i < files.length || i < 20; i++) {
+                if(files[i]) {
+                    var file = JSON.parse(files[i]);
+
+                    if(file.file === "image") {
+                        images.push(file);
+                        if(param === "images") {
+                            loadImageInPhotoGallery(file);
+                        } else {
+                            loadPost(file);
+                        }
+                    } else if (file.file === "video" && param === "videos") {
+                        loadVideoInVideoGallery(file);
+                    }
+                }
+            }
+
+            $("#left_animation").html("");
+            $("#right_animation").html("");
+            //images = shuffleArray(images);
+            console.log("Number of images, GET FILES FROM DB: " + images.length);
+            for(var i = 0; i < images.length && i < 6; i++) {
+                loadImageForAnimations(images[i], i);
+            }
+            animations();
         }
         console.log("Transaction completed");
     };
@@ -302,4 +329,77 @@ function getFilesFromDB(db, param) {
     transaction.onerror = function (event) {
         console.log("Transaction failed: " + event);
     };
+    
+}
+
+function shuffleArray(array){
+    for(let i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
+function animate(images) {
+    
+    //console.log("Images array before shuffling (length: " + images.length.toString() +  ")" + images);
+    images = shuffleArray(images);
+    //console.log("Images array after shuffling: " + images);
+    if(images.length > 0) {
+        $("#left_animation").fadeOut(10000, function() {
+            $("#left_animation").html("");
+            for(let i = 0; i < images.length; i++) {
+                if ((i % 2) === 0) {
+                    //$("#left_animation").hide();
+                    $("#left_animation").append(images[i]);
+                }
+            }
+            $("#left_animation").fadeIn(10000);
+        });
+
+        $("#right_animation").fadeOut(10000, function() {
+            $("#right_animation").html("");
+            for(let i = 0; i < images.length; i++) {
+                if(i % 2 === 1) {
+                    //$("#right_animation").hide();
+                    $("#right_animation").append(images[i]);
+                }
+            }
+            $("#right_animation").fadeIn(10000);
+        });
+    }
+}
+
+function loadImageForAnimations(res, num) {
+    var img = $('<img>');
+    img.addClass("mw-100 img-responsive");
+    img.attr("alt", res.caption);
+    img.attr("src", res.source);
+    if(num % 2 === 0) {
+        //left animation
+        img.appendTo($("#left_animation"));
+    } else if(num % 2 === 1) {
+        //right animation
+        img.appendTo($("#right_animation"));
+    }
+}
+
+function animations() {
+    var images = [];
+    
+    $("#left_animation img").each(function() {
+        console.log(this.value);
+        images.push($(this)[0]);
+    });
+
+    $("#right_animation img").each(function() {
+        images.push($(this)[0]);
+    });
+    
+    console.log("Number of images, ANIMATIONS: " + images.length);
+    setInterval(function() {
+        animate(images);
+    }, 5000);
 }
