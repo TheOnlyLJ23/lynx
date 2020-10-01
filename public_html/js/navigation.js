@@ -55,10 +55,7 @@ $("document").ready(function (){
                 ajax(param, db);
                 
                 getFilesFromDB(db, param);
-                
-                //animations();
-                
-                
+                            
                 break;
             
             case "#about":
@@ -370,6 +367,7 @@ function animate(images) {
             $("#right_animation").fadeIn(10000);
         });
     }
+    //console.log(images);
 }
 
 function loadImageForAnimations(res, num) {
@@ -390,7 +388,6 @@ function animations() {
     var images = [];
     
     $("#left_animation img").each(function() {
-        console.log(this.value);
         images.push($(this)[0]);
     });
 

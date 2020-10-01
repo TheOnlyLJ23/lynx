@@ -134,7 +134,6 @@ io.on('connection', (socket) => {
   });
   socket.on('send post', function(data) {
     var res = JSON.parse(data);
-    
     files.push(res);
   });
 });
