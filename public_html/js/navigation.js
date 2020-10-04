@@ -101,6 +101,7 @@ function ajax(param, db) {
             url: URL,
             type: 'GET',
             success: function(data) {
+                    console.log("data");
                     var res = JSON.parse(data);
                     if(res.file) {
                         addPostToDB(res, db);
@@ -279,10 +280,19 @@ function getFilesFromDB(db, param) {
         var cursor = event.target.result;
 
         if(cursor) {
-            files.push(JSON.stringify(cursor.value));
+            if(param === "images") {
+                if(cursor.value.file === "image") {
+                    files.push(JSON.stringify(cursor.value));
+                }
+            } else if (param === "videos") {
+                if(cursor.value.file === "video") {
+                    files.push(JSON.stringify(cursor.value));
+                }
+            } else {
+                files.push(JSON.stringify(cursor.value));
+            }
             cursor.continue();
         } else {
-            
             files.sort(function(a, b) {
                 var elem1 = JSON.parse(a);
                 var elem2 = JSON.parse(b);
@@ -305,15 +315,21 @@ function getFilesFromDB(db, param) {
                         } else {
                             loadPost(file);
                         }
-                    } else if (file.file === "video" && param === "videos") {
-                        loadVideoInVideoGallery(file);
+                    } else if (file.file === "video") {
+                        if(param === "videos") {
+                            loadVideoInVideoGallery(file);
+                        } else {
+                            loadPost(file);
+                        }
+                    } else {
+                        loadPost(file);
                     }
                 }
             }
 
             $("#left_animation").html("");
             $("#right_animation").html("");
-            //images = shuffleArray(images);
+            images = shuffleArray(images);
             console.log("Number of images, GET FILES FROM DB: " + images.length);
             for(var i = 0; i < images.length && i < 6; i++) {
                 loadImageForAnimations(images[i], i);
