@@ -90,3 +90,13 @@ footer {
     float: left;
     text-align: center;
 }
+
+.info_div {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+.info_div img {
+    float: right;
+}
