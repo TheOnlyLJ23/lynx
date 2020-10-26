@@ -6,7 +6,9 @@
 
 $("document").ready(function (){
     
-    $("#page_content").load("home.html");
+    $("#page_content").load("home.html", function () {
+        animations();
+    });
     $("#page_content").css("background-color", "black");
     
     if (!window.indexedDB) {
@@ -25,7 +27,7 @@ $("document").ready(function (){
     
     request.onsuccess = function (e) {
         db = e.target.result;
-        getFilesFromDB(db, "posts");
+        //getFilesFromDB(db, "posts");
     };
     
     request.onupgradeneeded = function(event) { 
@@ -47,14 +49,16 @@ $("document").ready(function (){
         var param;
         switch (link) {
             case "#home":
-                $("#page_content").load("home.html");
+                $("#page_content").load("home.html", function() {
+                    animations();
+                });
                 $("#page_content").css("background-color", "black");
                 
                 param = "posts";
                
-                ajax(param, db);
+                //ajax(param, db);
                 
-                getFilesFromDB(db, param);
+                //getFilesFromDB(db, param);
                             
                 break;
             
@@ -73,9 +77,9 @@ $("document").ready(function (){
                 $("#page_content").css("background-color", "black");
                 
                 param = "images";
-                ajax(param, db);
+                //ajax(param, db);
                 
-                getFilesFromDB(db, param);    
+                //getFilesFromDB(db, param);    
                 
                 break;
                 
@@ -85,9 +89,9 @@ $("document").ready(function (){
                 
                 param = "videos";
                 
-                ajax(param, db);
+                //ajax(param, db);
                 
-                getFilesFromDB(db, param);
+                //getFilesFromDB(db, param);
                 
             default:
         }
