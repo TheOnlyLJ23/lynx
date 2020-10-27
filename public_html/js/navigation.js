@@ -114,7 +114,7 @@ function ajax(param, db) {
             error: function(err) {
                 console.log("Ooops, something went wrong: " + err);
             }
-        });
+    });
 }
 
 function loadImagePost(res) {
@@ -363,28 +363,35 @@ function animate(images) {
     
     //console.log("Images array before shuffling (length: " + images.length.toString() +  ")" + images);
     images = shuffleArray(images);
+    var first_six_images = images.slice(0, 6);
+    var animation_length = 8000;
     //console.log("Images array after shuffling: " + images);
+    var count = 0;
     if(images.length > 0) {
-        $("#left_animation").fadeOut(10000, function() {
+        $("#left_animation").fadeOut(animation_length, function() {
             $("#left_animation").html("");
-            for(let i = 0; i < images.length; i++) {
+            for(let i = 0; i < first_six_images.length; i++) {
                 if ((i % 2) === 0) {
                     //$("#left_animation").hide();
-                    $("#left_animation").append(images[i]);
+                    $("#left_animation").append(first_six_images[i]);
+                    console.log("i = " + i.toString() + "appending to left_animation");
+                    count++;
                 }
             }
-            $("#left_animation").fadeIn(10000);
+            $("#left_animation").fadeIn(animation_length);
         });
 
-        $("#right_animation").fadeOut(10000, function() {
+        $("#right_animation").fadeOut(animation_length, function() {
             $("#right_animation").html("");
-            for(let i = 0; i < images.length; i++) {
+            for(let i = 0; i < first_six_images.length; i++) {
                 if(i % 2 === 1) {
                     //$("#right_animation").hide();
-                    $("#right_animation").append(images[i]);
+                    $("#right_animation").append(first_six_images[i]);
+                    console.log("i = " + i.toString() + "appending to right_animation");
+                    count++;
                 }
             }
-            $("#right_animation").fadeIn(10000);
+            $("#right_animation").fadeIn(animation_length);
         });
     }
     //console.log(images);
@@ -407,6 +414,15 @@ function loadImageForAnimations(res, num) {
 function animations() {
     var images = [];
     
+    $("#posts img").slice(0, 20).each(function() {
+        var img = $('<img>');
+        img.attr('src', $(this).attr('src'));
+        img.attr('alt', $(this).attr('alt'));
+        img.addClass("mw-100 img-responsive");
+        images.push(img);
+    });
+    
+    /*
     $("#left_animation img").each(function() {
         images.push($(this)[0]);
     });
@@ -414,7 +430,7 @@ function animations() {
     $("#right_animation img").each(function() {
         images.push($(this)[0]);
     });
-    
+    */
     console.log("Number of images, ANIMATIONS: " + images.length);
     setInterval(function() {
         animate(images);
