@@ -367,7 +367,6 @@ function animate(images) {
     var animation_length = 8000;
     //console.log("Images array after shuffling: " + images);
     var count = 0;
-    var testing_git = 0;
     if(images.length > 0) {
         $("#left_animation").fadeOut(animation_length, function() {
             $("#left_animation").html("");
