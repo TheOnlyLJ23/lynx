@@ -374,7 +374,7 @@ function animate(images) {
                 if ((i % 2) === 0) {
                     //$("#left_animation").hide();
                     $("#left_animation").append(first_six_images[i]);
-                    console.log("i = " + i.toString() + "appending to left_animation");
+                    //console.log("i = " + i.toString() + "appending to left_animation");
                     count++;
                 }
             }
@@ -387,7 +387,7 @@ function animate(images) {
                 if(i % 2 === 1) {
                     //$("#right_animation").hide();
                     $("#right_animation").append(first_six_images[i]);
-                    console.log("i = " + i.toString() + "appending to right_animation");
+                    //console.log("i = " + i.toString() + "appending to right_animation");
                     count++;
                 }
             }
