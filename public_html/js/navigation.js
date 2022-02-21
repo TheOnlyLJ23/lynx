@@ -7,6 +7,8 @@
 $("document").ready(function (){
     
     $("#page_content").load("home.html", function () {
+        const url = "https://github.com/lynx-prod/lynx/blob/master/public_html/posts.json";
+        loadPostsFromJSON(url);
         animations();
     });
     $("#page_content").css("background-color", "black");
@@ -435,4 +437,10 @@ function animations() {
     setInterval(function() {
         animate(images);
     }, 5000);
+}
+
+function loadPostsFromJSON(url) {
+    $.getJSON(url, function(data){
+        console.log(data);
+    });
 }
