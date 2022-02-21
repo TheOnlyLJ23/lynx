@@ -7,7 +7,7 @@
 $("document").ready(function (){
     
     $("#page_content").load("home.html", function () {
-        const url = "https://github.com/lynx-prod/lynx/blob/master/public_html/posts.json";
+        const url = "posts.json";
         loadPostsFromJSON(url);
         animations();
     });
@@ -441,6 +441,14 @@ function animations() {
 
 function loadPostsFromJSON(url) {
     $.getJSON(url, function(data){
-        console.log(data);
+        posts = data["posts"];
+        $.each(posts, function(key, value) {
+            if(value["src"]) {
+                console.log("This post contains an image");
+            }
+            else {
+                console.log("This post contains just text");
+            }
+        });
     });
 }
