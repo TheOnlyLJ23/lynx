@@ -1,0 +1,12 @@
+{
+    "posts":[
+        {   
+            "src": "media/fillo.jpg"
+            "caption": "Post with image"
+        },
+        {
+            "caption": "Post with only text"
+        }
+
+    ]
+}
