@@ -51,7 +51,7 @@ $("document").ready(function (){
         switch (link) {
             case "#home":
                 $("#page_content").load("home.html", function () {
-                    const url = "posts.json";
+                    var url = "posts.json";
                     loadPostsFromJSON(url, animations);
                 });
                 $("#page_content").css("background-color", "black");
@@ -86,7 +86,10 @@ $("document").ready(function (){
                 break;
                 
             case "#videos":
-                $("#page_content").load("videos.html");
+                $("#page_content").load("videos.html", function() {
+                    var url = "videos.json"
+                    loadVideosFromJSON(url);
+                });
                 $("#page_content").css("background-color", "black");
                 
                 param = "videos";
@@ -245,13 +248,14 @@ function loadVideoInVideoGallery(res) {
     var video_div = $('<div></div>');
     video_div.addClass("embed-responsive embed-responsive-16by9 video_div");
     
-    var video = $('<video></video>');
+    var video = $('<iframe></iframe>');
     video.addClass("embed-responsive-item");
-    video.attr("src", res.source);
+    video.attr("src", res.src);
     video.attr("controls", "controls");
+    video.attr("allowfullscreen", true);
     
     video.appendTo(video_div);
-    video_div.prependTo($("#videos"));
+    video_div.appendTo($("#videos"));
 }
 
 
@@ -445,5 +449,14 @@ function loadPostsFromJSON(url, callback) {
             loadPost(value);
         });
         callback();
+    });
+}
+
+function loadVideosFromJSON(url) {
+    $.getJSON(url, function(data) {
+        videos = data["videos"];
+        $.each(videos, function(key, value) {
+            loadVideoInVideoGallery(value);
+        });
     });
 }
