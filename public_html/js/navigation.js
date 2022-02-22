@@ -8,8 +8,7 @@ $("document").ready(function (){
     
     $("#page_content").load("home.html", function () {
         const url = "posts.json";
-        loadPostsFromJSON(url);
-        animations();
+        loadPostsFromJSON(url, animations);
     });
     $("#page_content").css("background-color", "black");
     
@@ -51,8 +50,9 @@ $("document").ready(function (){
         var param;
         switch (link) {
             case "#home":
-                $("#page_content").load("home.html", function() {
-                    animations();
+                $("#page_content").load("home.html", function () {
+                    const url = "posts.json";
+                    loadPostsFromJSON(url, animations);
                 });
                 $("#page_content").css("background-color", "black");
                 
@@ -100,6 +100,7 @@ $("document").ready(function (){
     });
 });
 
+//NOT USED
 function ajax(param, db) {
     //console.log("Performing GET request...");
     var URL = "http://localhost:3000/" + param;
@@ -124,7 +125,7 @@ function loadImagePost(res) {
     img_div.addClass("image_post post");
 
     var img = $('<img>');
-    img.attr('src', res.source);
+    img.attr('src', "media/" + res.src);
     img.attr('alt', "New Image");
     img.css('width', "100%");
     img.appendTo(img_div);
@@ -148,7 +149,7 @@ function loadVideoPost(res) {
     video_div.addClass("video_post post");
     
     var newVideo = $('<video></video>');
-    newVideo.attr('src', res.source);
+    newVideo.attr('src', res.src);
     newVideo.attr('controls', true);
     newVideo.appendTo(video_div);
     
@@ -179,21 +180,21 @@ function loadTextOnlyPost(res) {
 function loadPost(res) {
     
     var newPost;
-    switch (res.file) {
+    switch (res.type) {
         case "image":
             newPost = loadImagePost(res);
             break;
         case "video":
             newPost = loadVideoPost(res);
             break;
-        case "text-only":
+        case "text":
             newPost = loadTextOnlyPost(res);
             break;
         default:
    }
    //console.log(newPost);
    if(newPost) {
-    newPost.prependTo($("#posts"));
+    newPost.appendTo($("#posts"));
    }
    
 }
@@ -254,6 +255,7 @@ function loadVideoInVideoGallery(res) {
 }
 
 
+//NOT USED
 function addPostToDB(res, db) {
     
     //console.log("Adding res: " + res);
@@ -277,6 +279,8 @@ function addPostToDB(res, db) {
     };
 }
 
+
+//NOT USED
 function getFilesFromDB(db, param) {
     var files = [];
     var transaction = db.transaction(["posts"], "readonly");
@@ -361,25 +365,30 @@ function shuffleArray(array){
     return array;
 }
 
+function appendToRightAnimation(images, callback) {
+    
+}
+
 function animate(images) {
     
     //console.log("Images array before shuffling (length: " + images.length.toString() +  ")" + images);
     images = shuffleArray(images);
     var first_six_images = images.slice(0, 6);
-    var animation_length = 8000;
+    var animation_length = 6500;
     //console.log("Images array after shuffling: " + images);
-    var count = 0;
+    var count_left = 0;
+    var count_right = 0;
     if(images.length > 0) {
         $("#left_animation").fadeOut(animation_length, function() {
             $("#left_animation").html("");
             for(let i = 0; i < first_six_images.length; i++) {
-                if ((i % 2) === 0) {
+                if (i % 2 === 0) {
                     //$("#left_animation").hide();
                     $("#left_animation").append(first_six_images[i]);
                     //console.log("i = " + i.toString() + "appending to left_animation");
-                    count++;
+                    count_left++;
                 }
-            }
+            }            
             $("#left_animation").fadeIn(animation_length);
         });
 
@@ -390,7 +399,7 @@ function animate(images) {
                     //$("#right_animation").hide();
                     $("#right_animation").append(first_six_images[i]);
                     //console.log("i = " + i.toString() + "appending to right_animation");
-                    count++;
+                    count_right++;
                 }
             }
             $("#right_animation").fadeIn(animation_length);
@@ -416,39 +425,25 @@ function loadImageForAnimations(res, num) {
 function animations() {
     var images = [];
     
-    $("#posts img").slice(0, 20).each(function() {
+    $("#posts img").each(function() {
         var img = $('<img>');
         img.attr('src', $(this).attr('src'));
         img.attr('alt', $(this).attr('alt'));
-        img.addClass("mw-100 img-responsive");
+        img.addClass("mw-100 mh-25 img-responsive");
         images.push(img);
     });
     
-    /*
-    $("#left_animation img").each(function() {
-        images.push($(this)[0]);
-    });
-
-    $("#right_animation img").each(function() {
-        images.push($(this)[0]);
-    });
-    */
-    console.log("Number of images, ANIMATIONS: " + images.length);
     setInterval(function() {
         animate(images);
-    }, 5000);
+    }, 8000);
 }
 
-function loadPostsFromJSON(url) {
+function loadPostsFromJSON(url, callback) {
     $.getJSON(url, function(data){
         posts = data["posts"];
         $.each(posts, function(key, value) {
-            if(value["src"]) {
-                console.log("This post contains an image");
-            }
-            else {
-                console.log("This post contains just text");
-            }
+            loadPost(value);
         });
+        callback();
     });
 }

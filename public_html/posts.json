@@ -1,12 +1,53 @@
 {
     "posts":[
         {   
-            "src": "media/fillo.jpg",
+            "type": "image",
+            "src": "fillo.jpg",
             "caption": "Post with image"
         },
         {
+            "type": "text",
             "caption": "Post with only text"
-        }
+        },
+        {
+            "type": "image",
+            "src": "img1.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img3.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img4.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img2.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img8.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img6.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "image",
+            "src": "img7.jpg",
+            "caption": "Post with image"
+        },
+        {
+            "type": "text",
+            "caption": "The End"
+        }        
 
     ]
 }
