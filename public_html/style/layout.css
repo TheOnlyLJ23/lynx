@@ -9,13 +9,12 @@ and open the template in the editor.
 */
 
 body {
-    overflow: auto;
     width: 100%;
     height: 100%;
 }
 
 #page_content {
-    height:70%;
+    height: 100%;
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -79,8 +78,17 @@ footer {
   display: none;
 }
 
+#my_nanogallery2::-webkit-scrollbar {
+  display: none;
+}
+
 /* Hide scrollbar for IE, Edge and Firefox */
 #posts {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
+#my_nanogallery2 {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 } 
@@ -99,4 +107,10 @@ footer {
 
 .info_div img {
     float: right;
+}
+
+#my_nanogallery2 {
+    overflow: auto;
+    height: 500px;
+    width: 100%;
 }

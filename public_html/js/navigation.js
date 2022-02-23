@@ -7,7 +7,7 @@
 $("document").ready(function (){
     
     $("#page_content").load("home.html", function () {
-        const url = "posts.json";
+        const url = "application/posts.json";
         loadPostsFromJSON(url, animations);
     });
     $("#page_content").css("background-color", "black");
@@ -75,8 +75,10 @@ $("document").ready(function (){
                 break;
                 
             case "#photogallery":   
-                $("#page_content").load("photogallery.html");
-                $("#page_content").css("background-color", "black");
+                $("#page_content").load("photogallery1.html", function () {
+                    Album_Grid_Justified();
+                    $("#page_content").css("background-color", "black");
+                });
                 
                 param = "images";
                 //ajax(param, db);
@@ -87,7 +89,7 @@ $("document").ready(function (){
                 
             case "#videos":
                 $("#page_content").load("videos.html", function() {
-                    var url = "videos.json"
+                    var url = "application/videos.json";
                     loadVideosFromJSON(url);
                 });
                 $("#page_content").css("background-color", "black");
@@ -458,5 +460,81 @@ function loadVideosFromJSON(url) {
         $.each(videos, function(key, value) {
             loadVideoInVideoGallery(value);
         });
+    });
+
+}
+
+function Album_Grid_Justified() {
+    $("#my_nanogallery2").nanogallery2({
+        
+        items: [
+        // album 1
+        { src: 'media/img1.jpg',                         title: 'album A',  ID: 1,	kind:'album' },
+        { src: 'media/img1.jpg', srct: 'media/img1.jpg', title: 'image A1', ID: 10, albumID: 1 },
+        { src: 'media/img2.jpg', srct: 'media/img2.jpg', title: 'image A2', ID: 11, albumID: 1 },
+        { src: 'media/img3.jpg', srct: 'media/img3.jpg', title: 'image A3', ID: 12, albumID: 1 },
+        // album 2
+        { src: 'media/img5.jpg',                         title: 'album B',  ID: 2,	kind:'album' },
+        { src: 'media/img5.jpg', srct: 'media/img5.jpg', title: 'image B1', ID: 13, albumID: 2},
+        { src: 'media/img7.jpg', srct: 'media/img7.jpg', title: 'image B2', ID: 14, albumID: 2 },
+        { src: 'media/img8.jpg', srct: 'media/img8.jpg', title: 'image B3', ID: 15, albumID: 2 }
+        ],
+
+        // GALLERY AND THUMBNAIL LAYOUT
+        galleryL1DisplayMode: 'fullContent',                // first level display mode -> fullContent
+        galleryDisplayMode: 'rows',                         // other levels display mode -> 4 rows
+        galleryMaxRows: 4,
+        gallerySorting: 'titleAsc',
+
+        // thumbnail on other gallery level
+        thumbnailHeight: '200 XS80 SM120', thumbnailWidth: 'auto XS80 SM120',       // other levels -> justified layout
+        thumbnailGutterWidth: 2,
+        thumbnailGutterHeight: 2,
+        thumbnailBorderHorizontal: 0,
+        thumbnailBorderVertical: 0,
+        
+        // thumbnail on first gallery level
+        thumbnailL1Height: "200 XS80 LA250 XL350", thumbnailL1Width: "300 XS100 LA400 XL500",      // first level -> grid kayout
+        thumbnailL1GutterWidth: 20,
+        thumbnailL1GutterHeight: 20,
+        thumbnailL1BorderHorizontal: 0,
+        thumbnailL1BorderVertical: 0,
+
+        thumbnailAlignment: 'center',
+
+        // THUMBNAIL TOOLS & LABEL
+        thumbnailToolbarImage : null,
+        thumbnailToolbarAlbum: null,
+        // first level label
+        thumbnailL1Label: { display: true, valign:'bottom', hideIcons: true, titleFontSize: '3em', align: 'left', titleMultiLine:true, displayDescription: false},
+        // other level label
+        thumbnailLabel: { display: true, position:'overImageOnBottom', hideIcons: true, titleFontSize: '1em', align: 'center', titleMultiLine:true, displayDescription: false},
+
+                                      // thumbnailToolbarAlbum: { topRight: 'counter' },
+
+        // DISPLAY ANIMATION
+        thumbnailL1DisplayTransition: 'flipUp',         // first level display animation
+        thumbnailDisplayTransition: 'slideDown',        // other levels display animation
+        thumbnailDisplayTransitionDuration: 500,
+        thumbnailDisplayInterval: 30,
+
+        // THUMBNAIL'S HOVER ANIMATION
+        // first level
+        thumbnailL1BuildInit2: 'title_font-weight_bold|image_scale_0.8|label_left_-25px|label_top_95%|label_rotateZ_-90deg|label_transform-origin_top left',
+        thumbnailL1HoverEffect2: 'imageGrayOff|title_color_#46D6AB_#aaaaaa|labelOpacity50',
+        // other levels -> no hover effect
+
+        // touch handling
+        touchAnimation: false,
+        touchAutoOpenDelay: 800,
+
+        // GALLERY THEME
+        galleryTheme : { 
+          thumbnail: { background: '#111', titleShadow : '', descriptionShadow : 'none', titleColor: '#fff', borderColor: '#000' },
+          navigationBreadcrumb: { background : '#3C4B5B' }
+        },
+
+        // DEEP LINKING
+        locationHash: false
     });
 }
