@@ -469,12 +469,12 @@ function Album_Grid_Justified() {
         
         items: [
         // album 1
-        { src: 'media/img1.jpg',                         title: 'album A',  ID: 1,	kind:'album' },
+        { src: 'media/img1.jpg', srct: 'media/img1.jpg', title: 'album A',  ID: 1, kind:'album' },
         { src: 'media/img1.jpg', srct: 'media/img1.jpg', title: 'image A1', ID: 10, albumID: 1 },
         { src: 'media/img2.jpg', srct: 'media/img2.jpg', title: 'image A2', ID: 11, albumID: 1 },
         { src: 'media/img3.jpg', srct: 'media/img3.jpg', title: 'image A3', ID: 12, albumID: 1 },
         // album 2
-        { src: 'media/img5.jpg',                         title: 'album B',  ID: 2,	kind:'album' },
+        { src: 'media/img5.jpg', srct: 'media/img5.jpg', title: 'album B',  ID: 2, kind:'album' },
         { src: 'media/img5.jpg', srct: 'media/img5.jpg', title: 'image B1', ID: 13, albumID: 2},
         { src: 'media/img7.jpg', srct: 'media/img7.jpg', title: 'image B2', ID: 14, albumID: 2 },
         { src: 'media/img8.jpg', srct: 'media/img8.jpg', title: 'image B3', ID: 15, albumID: 2 }
@@ -492,6 +492,7 @@ function Album_Grid_Justified() {
         thumbnailGutterHeight: 2,
         thumbnailBorderHorizontal: 0,
         thumbnailBorderVertical: 0,
+        
         
         // thumbnail on first gallery level
         thumbnailL1Height: "200 XS80 LA250 XL350", thumbnailL1Width: "300 XS100 LA400 XL500",      // first level -> grid kayout
