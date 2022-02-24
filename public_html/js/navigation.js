@@ -51,7 +51,7 @@ $("document").ready(function (){
         switch (link) {
             case "#home":
                 $("#page_content").load("home.html", function () {
-                    var url = "posts.json";
+                    var url = "application/posts.json";
                     loadPostsFromJSON(url, animations);
                 });
                 $("#page_content").css("background-color", "black");
