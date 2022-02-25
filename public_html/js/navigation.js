@@ -76,9 +76,10 @@ $("document").ready(function (){
                 
             case "#photogallery":   
                 $("#page_content").load("photogallery1.html", function () {
-                    Album_Grid_Justified();
-                    $("#page_content").css("background-color", "black");
+                    var url = "application/photogallery.json";
+                    loadPhotoGalleryFromJSON(url);
                 });
+                $("#page_content").css("background-color", "black");
                 
                 param = "images";
                 //ajax(param, db);
@@ -464,21 +465,16 @@ function loadVideosFromJSON(url) {
 
 }
 
-function Album_Grid_Justified() {
+function loadPhotoGalleryFromJSON(url) {
+    $.getJSON(url, function(data) {
+        Album_Grid_Justified(data["items"]);
+    });
+}
+
+function Album_Grid_Justified(items) {
     $("#my_nanogallery2").nanogallery2({
         
-        items: [
-        // album 1
-        { src: 'media/img1.jpg', srct: 'media/img1.jpg', title: 'album A',  ID: 1, kind:'album' },
-        { src: 'media/img1.jpg', srct: 'media/img1.jpg', title: 'image A1', ID: 10, albumID: 1 },
-        { src: 'media/img2.jpg', srct: 'media/img2.jpg', title: 'image A2', ID: 11, albumID: 1 },
-        { src: 'media/img3.jpg', srct: 'media/img3.jpg', title: 'image A3', ID: 12, albumID: 1 },
-        // album 2
-        { src: 'media/img5.jpg', srct: 'media/img5.jpg', title: 'album B',  ID: 2, kind:'album' },
-        { src: 'media/img5.jpg', srct: 'media/img5.jpg', title: 'image B1', ID: 13, albumID: 2},
-        { src: 'media/img7.jpg', srct: 'media/img7.jpg', title: 'image B2', ID: 14, albumID: 2 },
-        { src: 'media/img8.jpg', srct: 'media/img8.jpg', title: 'image B3', ID: 15, albumID: 2 }
-        ],
+        items,
 
         // GALLERY AND THUMBNAIL LAYOUT
         galleryL1DisplayMode: 'fullContent',                // first level display mode -> fullContent
