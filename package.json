@@ -10,7 +10,5 @@
     ],
     "author": "liam",
     "contributors": [],
-    "dependencies": {
-        "nanogallery2": "^3.0.5"
-    }
+    "dependencies": {}
 }
