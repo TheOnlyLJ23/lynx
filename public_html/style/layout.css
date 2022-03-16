@@ -45,17 +45,29 @@ footer {
     height: 500px;
 }
 
+#left_animation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#right_animation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+} 
+
 #left_animation img {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     height: 30%;
-    width: 100%;
 }
 
 #right_animation img {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     height: 30%;
-    width: 80%;
 }
+
+
 
 .video_div {
     display: block;
@@ -149,4 +161,12 @@ img.nGY2GThumbnailImg.nGY2TnImg2 {
 
 .nGY2Breadcrumb {
     width: 20%;
+}
+
+nav .navbar-nav a {
+  color: white !important;
+}
+
+.bg-light {
+    background-color: #063a82 !important;
 }
