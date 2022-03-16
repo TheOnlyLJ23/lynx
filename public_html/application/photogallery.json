@@ -1,29 +1,29 @@
 {
     "items": [
         {
-          "src": "media/img1.jpg",
-          "srct": "media/img1.jpg",
+          "src": "media/IMG_8882.JPG",
+          "srct": "media/IMG_8882.JPG",
           "title": "album A",
           "ID": 1,
           "kind": "album"
         },
         {
-          "src": "media/img1.jpg",
-          "srct": "media/img1.jpg",
+          "src": "media/IMG_7223.JPG",
+          "srct": "media/IMG_7223.JPG",
           "title": "image A1",
           "ID": 10,
           "albumID": 1
         },
         {
-          "src": "media/img2.jpg",
-          "srct": "media/img2.jpg",
+          "src": "media/IMG_8881.jpg",
+          "srct": "media/IMG_8881.jpg",
           "title": "image A2",
           "ID": 11,
           "albumID": 1
         },
         {
-          "src": "media/img3.jpg",
-          "srct": "media/img3.jpg",
+          "src": "media/IMG_5344.JPG",
+          "srct": "media/IMG_5344.JPG",
           "title": "image A3",
           "ID": 12,
           "albumID": 1
@@ -36,29 +36,29 @@
             "albumID": 1
         },
         {
-          "src": "media/img5.jpg",
-          "srct": "media/img5.jpg",
+          "src": "media/DSC06586.JPG",
+          "srct": "media/DSC06586.JPG",
           "title": "album B",
           "ID": 2,
           "kind": "album"
         },
         {
-          "src": "media/img5.jpg",
-          "srct": "media/img5.jpg",
+          "src": "media/DSC06586.JPG",
+          "srct": "media/DSC06586.JPG",
           "title": "image B1",
           "ID": 13,
           "albumID": 2
         },
         {
-          "src": "media/img7.jpg",
-          "srct": "media/img7.jpg",
+          "src": "media/DSC06942.JPG",
+          "srct": "media/DSC06942.JPG",
           "title": "image B2",
           "ID": 14,
           "albumID": 2
         },
         {
-          "src": "media/img8.jpg",
-          "srct": "media/img8.jpg",
+          "src": "media/DSC04864.JPG",
+          "srct": "media/DSC04864.JPG",
           "title": "image B3",
           "ID": 15,
           "albumID": 2

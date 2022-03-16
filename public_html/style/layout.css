@@ -37,12 +37,24 @@ footer {
     margin-right: 5px;
 }
 
+#left_animation {
+    height: 500px;
+}
+
+#right_animation {
+    height: 500px;
+}
+
 #left_animation img {
     margin-bottom: 5px;
+    height: 30%;
+    width: 100%;
 }
 
 #right_animation img {
     margin-bottom: 5px;
+    height: 30%;
+    width: 80%;
 }
 
 .video_div {
