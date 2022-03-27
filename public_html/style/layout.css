@@ -170,3 +170,12 @@ nav .navbar-nav a {
 .bg-light {
     background-color: #063a82 !important;
 }
+
+#logo_container {
+    display: flex;
+}
+#logo_title {
+    margin: auto;  /* Magic! */
+    max-width: 100%;
+    max-height: 100%;
+}

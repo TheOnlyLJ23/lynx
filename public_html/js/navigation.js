@@ -12,39 +12,6 @@ $("document").ready(function (){
     });
     $("#page_content").css("background-color", "black");
     
-    if (!window.indexedDB) {
-        console.log("Your browser doesn't support a stable version of IndexedDB.");
-    } else {
-        console.log("IndexedDB is working fine, keep going!");
-    }
-    
-    var db;
-    
-    var request = window.indexedDB.open("MediaDatabase", 1);
-    
-    request.onerror = function (e) {
-        console.log("There was an error: " + e);
-    };
-    
-    request.onsuccess = function (e) {
-        db = e.target.result;
-        //getFilesFromDB(db, "posts");
-    };
-    
-    request.onupgradeneeded = function(event) { 
-        
-        db = event.target.result;
-
-        // Create an objectStore for this database
-        var postsDB = db.createObjectStore("posts", { autoIncrement: true });
-        postsDB.createIndex("file", "file", {unique: false});           
-        
-    };
-    
-    
-    
-    $("#page_content").css("background-color", "black");
-    
     $(".navbar-nav a").on("click", function() {
         var link = $(this).attr("href");
         var param;
@@ -106,25 +73,6 @@ $("document").ready(function (){
     });
 });
 
-//NOT USED
-function ajax(param, db) {
-    //console.log("Performing GET request...");
-    var URL = "http://localhost:3000/" + param;
-    $.ajax({
-            url: URL,
-            type: 'GET',
-            success: function(data) {
-                    console.log("data");
-                    var res = JSON.parse(data);
-                    if(res.file) {
-                        addPostToDB(res, db);
-                    }
-            },
-            error: function(err) {
-                console.log("Ooops, something went wrong: " + err);
-            }
-    });
-}
 
 function loadImagePost(res) {
     var img_div = $('<div></div>');
@@ -261,107 +209,6 @@ function loadVideoInVideoGallery(res) {
     video_div.appendTo($("#videos"));
 }
 
-
-//NOT USED
-function addPostToDB(res, db) {
-    
-    //console.log("Adding res: " + res);
-    
-    res.time = new Date();
-    //console.log("Date: " + res.time);
-    var transaction = db.transaction(["posts"], "readwrite");
-    
-    transaction.oncomplete = function() {
-        console.log("Transaction completed!");
-    };
-    
-    transaction.onerror = function (event) {
-        console.log("Transaction failed: " + event);
-    };
-    var objectStore = transaction.objectStore("posts");
-    var request = objectStore.add(res);
-    
-    request.onsuccess = function (e) {
-        console.log("Added post: " + e.target.result.toString());
-    };
-}
-
-
-//NOT USED
-function getFilesFromDB(db, param) {
-    var files = [];
-    var transaction = db.transaction(["posts"], "readonly");
-    var objectStore = transaction.objectStore("posts");
-    var index = objectStore.index("file");
-    index.openCursor().onsuccess = function(event) {
-        var cursor = event.target.result;
-
-        if(cursor) {
-            if(param === "images") {
-                if(cursor.value.file === "image") {
-                    files.push(JSON.stringify(cursor.value));
-                }
-            } else if (param === "videos") {
-                if(cursor.value.file === "video") {
-                    files.push(JSON.stringify(cursor.value));
-                }
-            } else {
-                files.push(JSON.stringify(cursor.value));
-            }
-            cursor.continue();
-        } else {
-            files.sort(function(a, b) {
-                var elem1 = JSON.parse(a);
-                var elem2 = JSON.parse(b);
-                return new Date(Date.parse(elem1.time)).getTime() - new Date(Date.parse(elem2.time)).getTime();
-            });
-        }
-    };
-
-    transaction.oncomplete = function() {
-        var images = [];
-        if(files.length > 0) {
-            for(var i = 0; i < files.length || i < 20; i++) {
-                if(files[i]) {
-                    var file = JSON.parse(files[i]);
-
-                    if(file.file === "image") {
-                        images.push(file);
-                        if(param === "images") {
-                            loadImageInPhotoGallery(file);
-                        } else {
-                            loadPost(file);
-                        }
-                    } else if (file.file === "video") {
-                        if(param === "videos") {
-                            loadVideoInVideoGallery(file);
-                        } else {
-                            loadPost(file);
-                        }
-                    } else {
-                        loadPost(file);
-                    }
-                }
-            }
-
-            $("#left_animation").html("");
-            $("#right_animation").html("");
-            images = shuffleArray(images);
-            console.log("Number of images, GET FILES FROM DB: " + images.length);
-            for(var i = 0; i < images.length && i < 6; i++) {
-                loadImageForAnimations(images[i], i);
-            }
-            animations();
-        }
-        console.log("Transaction completed");
-    };
-
-    transaction.onerror = function (event) {
-        console.log("Transaction failed: " + event);
-    };
-    
-}
-
 function shuffleArray(array){
     for(let i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -381,7 +228,7 @@ function animate(images) {
     //console.log("Images array before shuffling (length: " + images.length.toString() +  ")" + images);
     images = shuffleArray(images);
     var first_six_images = images.slice(0, 6);
-    var animation_length = 6500;
+    var animation_length = 5000;
     //console.log("Images array after shuffling: " + images);
     var count_left = 0;
     var count_right = 0;
@@ -442,7 +289,7 @@ function animations() {
     
     setInterval(function() {
         animate(images);
-    }, 8000);
+    }, 2000);
 }
 
 function loadPostsFromJSON(url, callback) {
