@@ -330,7 +330,7 @@ function Album_Grid_Justified(items) {
         gallerySorting: 'titleAsc',
 
         // thumbnail on other gallery level
-        thumbnailHeight: '200 XS80 SM120', thumbnailWidth: 'auto XS80 SM120',       // other levels -> justified layout
+        thumbnailHeight: '200 XS160', thumbnailWidth: 'auto XS160',       // other levels -> justified layout
         thumbnailGutterWidth: 2,
         thumbnailGutterHeight: 2,
         thumbnailBorderHorizontal: 0,
@@ -338,9 +338,9 @@ function Album_Grid_Justified(items) {
         
         
         // thumbnail on first gallery level
-        thumbnailL1Height: "200 XS80 LA250 XL350", thumbnailL1Width: "300 XS100 LA400 XL500",      // first level -> grid kayout
-        thumbnailL1GutterWidth: 20,
-        thumbnailL1GutterHeight: 20,
+        thumbnailL1Height: "200 XS150", thumbnailL1Width: "300 XS170",      // first level -> grid kayout
+        thumbnailL1GutterWidth: 10,
+        thumbnailL1GutterHeight: 10,
         thumbnailL1BorderHorizontal: 0,
         thumbnailL1BorderVertical: 0,
 
@@ -350,7 +350,7 @@ function Album_Grid_Justified(items) {
         thumbnailToolbarImage : null,
         thumbnailToolbarAlbum: null,
         // first level label
-        thumbnailL1Label: { display: true, valign:'bottom', hideIcons: true, titleFontSize: '3em', align: 'left', titleMultiLine:true, displayDescription: false},
+        thumbnailL1Label: { display: true, valign:'bottom', hideIcons: true, titleFontSize: '2em', align: 'left', titleMultiLine:true, displayDescription: false},
         // other level label
         thumbnailLabel: { display: true, position:'overImageOnBottom', hideIcons: true, titleFontSize: '1em', align: 'center', titleMultiLine:true, displayDescription: false},
 
@@ -364,8 +364,8 @@ function Album_Grid_Justified(items) {
 
         // THUMBNAIL'S HOVER ANIMATION
         // first level
-        thumbnailL1BuildInit2: 'title_font-weight_bold|image_scale_0.8|label_left_-25px|label_top_95%|label_rotateZ_-90deg|label_transform-origin_top left',
-        thumbnailL1HoverEffect2: 'imageGrayOff|title_color_#46D6AB_#aaaaaa|labelOpacity50',
+        thumbnailL1BuildInit2: 'title_font-weight_bold|image_scale_0.8|label_left_-8px|label_top_95%|label_rotateZ_-90deg|label_transform-origin_top left',
+        thumbnailL1HoverEffect2: 'title_color_#46D6AB_#aaaaaa|labelOpacity50',
         // other levels -> no hover effect
 
         // touch handling
