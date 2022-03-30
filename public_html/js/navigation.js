@@ -350,7 +350,7 @@ function Album_Grid_Justified(items) {
         thumbnailToolbarImage : null,
         thumbnailToolbarAlbum: null,
         // first level label
-        thumbnailL1Label: { display: true, valign:'bottom', hideIcons: true, titleFontSize: '2em', align: 'left', titleMultiLine:true, displayDescription: false},
+        thumbnailL1Label: { display: true, valign:'bottom', hideIcons: true, titleFontSize: '1em', align: 'left', titleMultiLine:true, displayDescription: false},
         // other level label
         thumbnailLabel: { display: true, position:'overImageOnBottom', hideIcons: true, titleFontSize: '1em', align: 'center', titleMultiLine:true, displayDescription: false},
 

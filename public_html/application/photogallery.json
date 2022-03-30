@@ -1,66 +1,305 @@
 {
     "items": [
         {
-          "src": "media/IMG_8882.JPG",
-          "srct": "media/IMG_8882.JPG",
-          "title": "album A",
-          "ID": 1,
-          "kind": "album"
+            "src": "media/IMG_8882.JPG",
+            "srct": "media/IMG_8882.JPG",
+            "title": "Sport",
+            "ID": 1,
+            "kind": "album"
         },
         {
-          "src": "media/IMG_7223.JPG",
-          "srct": "media/IMG_7223.JPG",
-          "title": "image A1",
-          "ID": 10,
-          "albumID": 1
+            "src": "media/IMG_7223.JPG",
+            "srct": "media/IMG_7223.JPG",
+            "title": "Sport #01",
+            "ID": 10,
+            "albumID": 1
         },
         {
-          "src": "media/IMG_8881.jpg",
-          "srct": "media/IMG_8881.jpg",
-          "title": "image A2",
-          "ID": 11,
-          "albumID": 1
+            "src": "media/IMG_8881.jpg",
+            "srct": "media/IMG_8881.jpg",
+            "title": "Sport #02",
+            "ID": 11,
+            "albumID": 1
         },
         {
-          "src": "media/IMG_5344.JPG",
-          "srct": "media/IMG_5344.JPG",
-          "title": "image A3",
-          "ID": 12,
-          "albumID": 1
+            "src": "media/20210630_WECH_FRA-NED_Hop_Lisa_2.JPG",
+            "srct": "media/20210630_WECH_FRA-NED_Hop_Lisa_2.JPG",
+            "title": "Sport #03",
+            "ID": 12,
+            "albumID": 1
         },
         {
             "src": "media/202175_U18_EBC_ESP-AUT.JPG",
             "srct": "media/202175_U18_EBC_ESP-AUT.JPG",
-            "title": "image A4",
+            "title": "Sport #04",
+            "ID": 13,
+            "albumID": 1
+        },
+        {
+            "src": "media/202175_U18_EBC_ITA-LTU_Lollo_Alessio.JPG",
+            "srct": "media/202175_U18_EBC_ITA-LTU_Lollo_Alessio.JPG",
+            "title": "Sport #05",
+            "ID": 14,
+            "albumID": 1
+            
+        },
+        {
+            "src": "media/202176_U18_EBC_07.JPG",
+            "srct": "media/202176_U18_EBC_07.JPG",
+            "title": "Sport #06",
+            "ID": 15,
+            "albumID": 1
+        },
+        {
+            "src": "media/202176_U18_EBC_12.JPG",
+            "srct": "media/202176_U18_EBC_12.JPG",
+            "title": "Sport #07",
+            "ID": 16,
+            "albumID": 1
+        },
+        {
+            "src": "media/202177_U18_EBC_CZE-ESP_Pena_Anderson.JPG",
+            "srct": "media/202177_U18_EBC_CZE-ESP_Pena_Anderson.JPG",
+            "title": "Sport #08",
+            "ID": 17,
+            "albumID": 1
+        },
+        {
+            "src": "media/202178_U18_EBC_ITA-ISR_Gamberini_Samuele_04.JPG",
+            "srct": "media/202178_U18_EBC_ITA-ISR_Gamberini_Samuele_04.JPG",
+            "title": "Sport #09",
+            "ID": 18,
+            "albumID": 1
+        },
+        {
+            "src": "media/202179_U18_EBC_SPA-GER_03.JPG",
+            "srct": "media/202179_U18_EBC_SPA-GER_03.JPG",
+            "title": "Sport #10",
+            "ID": 19,
+            "albumID": 1
+        },
+        {
+            "src": "media/202179_U18_EBC_SPA-GER_Hanson_Christopher_Jay.JPG",
+            "srct": "media/202179_U18_EBC_SPA-GER_Hanson_Christopher_Jay.JPG",
+            "title": "Sport #11",
             "ID": 20,
             "albumID": 1
         },
         {
-          "src": "media/DSC06586.JPG",
-          "srct": "media/DSC06586.JPG",
-          "title": "album B",
+            "src": "media/202179_U18_EBC_SPA-GER_Russell_Tristan_02.JPG",
+            "srct": "media/202179_U18_EBC_SPA-GER_Russell_Tristan_02.JPG",
+            "title": "Sport #12",
+            "ID": 21,
+            "albumID": 1
+        },
+        {
+            "src": "media/202179_U18_EBC_SPA-GER_Van_Bergen_Moritz.JPG",
+            "srct": "media/202179_U18_EBC_SPA-GER_Van_Bergen_Moritz.JPG",
+            "title": "Sport #13",
+            "ID": 22,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC00522.JPG",
+            "srct": "media/DSC00522.JPG",
+            "title": "Sport #14",
+            "ID": 23,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC00344.jpg",
+            "srct": "media/DSC00344.jpg",
+            "title": "Sport #15",
+            "ID": 24,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC04864.JPG",
+            "srct": "media/DSC04864.JPG",
+            "title": "Sport #16",
+            "ID": 25,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC06469.JPG",
+            "srct": "media/DSC06469.JPG",
+            "title": "Sport #17",
+            "ID": 26,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC06586.JPG",
+            "srct": "media/DSC06586.JPG",
+            "title": "Sport #18",
+            "ID": 27,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC06942.JPG",
+            "srct": "media/DSC06942.JPG",
+            "title": "Sport #19",
+            "ID": 28,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC07454 (1).jpg",
+            "srct": "media/DSC07454 (1).jpg",
+            "title": "Sport #20",
+            "ID": 29,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC09358.JPG",
+            "srct": "media/DSC09358.JPG",
+            "title": "Sport #21",
+            "ID": 30,
+            "albumID": 1
+        },
+        {
+            "src": "media/DSC09370.JPG",
+            "srct": "media/DSC09370.JPG",
+            "title": "Sport #22",
+            "ID": 31,
+            "albumID": 1
+        },
+        {
+            "src": "media/IMG_7198.jpg",
+            "srct": "media/IMG_7198.jpg",
+            "title": "Sport #23",
+            "ID": 32,
+            "albumID": 1
+        },
+        {
+            "src": "media/IMG_7223.JPG",
+            "srct": "media/IMG_7223.JPG",
+            "title": "Sport #24",
+            "ID": 33,
+            "albumID": 1
+        },
+        {
+            "src": "media/IMG_7537.JPG",
+            "srct": "media/IMG_7537.JPG",
+            "title": "Sport #25",
+            "ID": 34,
+            "albumID": 1
+        },
+        {
+            "src": "media/IMG_8882.JPG",
+            "srct": "media/IMG_8882.JPG",
+            "title": "Sport #26",
+            "ID": 35,
+            "albumID": 1
+        },
+        {
+            "src": "media/IMG_9408.jpg",
+            "srct": "media/IMG_9408.jpg",
+            "title": "Sport #27",
+            "ID": 36,
+            "albumID": 1
+        },
+        {
+          "src": "media/DSC00758.jpg",
+          "srct": "media/DSC00758.jpg",
+          "title": "Photoshoot",
           "ID": 2,
           "kind": "album"
         },
         {
-          "src": "media/DSC06586.JPG",
-          "srct": "media/DSC06586.JPG",
-          "title": "image B1",
-          "ID": 13,
+          "src": "media/DSC00724.jpg",
+          "srct": "media/DSC00724.jpg",
+          "title": "Photoshoot #01",
+          "ID": 37,
           "albumID": 2
         },
         {
-          "src": "media/DSC06942.JPG",
-          "srct": "media/DSC06942.JPG",
-          "title": "image B2",
-          "ID": 14,
+          "src": "media/DSC00742.jpg",
+          "srct": "media/DSC00742.jpg",
+          "title": "Photoshoot #02",
+          "ID": 39,
           "albumID": 2
         },
         {
-          "src": "media/DSC04864.JPG",
-          "srct": "media/DSC04864.JPG",
-          "title": "image B3",
-          "ID": 15,
+          "src": "media/DSC00753.jpg",
+          "srct": "media/DSC00753.jpg",
+          "title": "Photoshoot #03",
+          "ID": 40,
+          "albumID": 2
+        },
+        {
+          "src": "media/DSC00753.jpg",
+          "srct": "media/DSC00753.jpg",
+          "title": "Photoshoot #04",
+          "ID": 41,
+          "albumID": 2
+        },
+        {
+          "src": "media/DSC00805 (1).jpg",
+          "srct": "media/DSC00805 (1).jpg",
+          "title": "Photoshoot #05",
+          "ID": 42,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG-20210819-WA0018.jpg",
+          "srct": "media/IMG-20210819-WA0018.jpg",
+          "title": "Photoshoot #06",
+          "ID": 43,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG-20210819-WA0019.jpg",
+          "srct": "media/IMG-20210819-WA0019.jpg",
+          "title": "Photoshoot #07",
+          "ID": 44,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG_5344.JPG",
+          "srct": "media/IMG_5344.JPG",
+          "title": "Photoshoot #08",
+          "ID": 45,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG_5468.JPG",
+          "srct": "media/IMG_5468.JPG",
+          "title": "Photoshoot #09",
+          "ID": 46,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG_5556.JPG",
+          "srct": "media/IMG_5556.JPG",
+          "title": "Photoshoot #10",
+          "ID": 47,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG_9050 (1).jpg",
+          "srct": "media/IMG_9050 (1).jpg",
+          "title": "Photoshoot #11",
+          "ID": 48,
+          "albumID": 2
+        },
+        {
+          "src": "media/IMG_9081 (1).jpg",
+          "srct": "media/IMG_9081 (1).jpg",
+          "title": "Photoshoot #12",
+          "ID": 49,
+          "albumID": 2
+        },
+        {
+          "src": "media/PicsArt_12-18-07.05.04.jpg",
+          "srct": "media/PicsArt_12-18-07.05.04.jpg",
+          "title": "Photoshoot #13",
+          "ID": 50,
+          "albumID": 2
+        },
+        {
+          "src": "media/PicsArt_12-23-08.09.18.jpg",
+          "srct": "media/PicsArt_12-23-08.09.18.jpg",
+          "title": "Photoshoot #14",
+          "ID": 51,
           "albumID": 2
         }
     ]
