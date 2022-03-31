@@ -92,6 +92,35 @@ function loadImagePost(res) {
         var txt = $('<p></p>');
         txt.text(res.caption);
         txt.appendTo(img_div);
+
+        if(res.album) {
+            var txt_link = $('<p></p>');
+            txt_link.addClass("caption_link");
+            switch(res.album) {
+                case "Sport":
+                    txt_link.text("Fotografia sportiva - vedi altro nell'album ");
+                    break;
+                case "Photoshoot":
+                    txt_link.text("Photoshoot personalizzati - vedi altro nell'album ");
+                    break;
+                default:
+            }
+            
+            var link_to_photogallery = $('<a></a>');
+            link_to_photogallery.attr("href", "#photogallery");
+            link_to_photogallery.text(res.album);
+            
+            $(".caption_link a").on("click", function() {
+                $("#page_content").load("photogallery1.html", function () {
+                    var url = "application/photogallery.json";
+                    loadPhotoGalleryFromJSON(url);
+                });
+                $("#page_content").css("background-color", "black");
+            });
+
+            link_to_photogallery.appendTo(txt_link);
+            txt_link.appendTo(caption_div);
+        }
     }
 
     return img_div;
@@ -219,10 +248,6 @@ function shuffleArray(array){
     return array;
 }
 
-function appendToRightAnimation(images, callback) {
-    
-}
-
 function animate(images) {
     
     //console.log("Images array before shuffling (length: " + images.length.toString() +  ")" + images);
@@ -305,6 +330,17 @@ function loadPostsFromJSON(url, callback) {
 function loadVideosFromJSON(url) {
     $.getJSON(url, function(data) {
         videos = data["videos"];
+        if (!videos.length) {
+            msg_div = $("<div></div");
+            msg_txt = $("<p></p>");
+            
+            msg_txt.text("Sorry, there are no videos to show at the moment.");
+            msg_txt.css("color", "white");
+            msg_txt.appendTo(msg_div);
+            msg_div.appendTo($("#videos"));
+        } else {
+            console.log("There are some videos to show");
+        }
         $.each(videos, function(key, value) {
             loadVideoInVideoGallery(value);
         });

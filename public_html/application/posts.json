@@ -2,52 +2,39 @@
     "posts":[
         {   
             "type": "image",
-            "src": "202176_U18_EBC_07.JPG",
-            "caption": "Post with image"
+            "src": "DSC06469.JPG",
+            "caption": " ",
+            "album": "Sport"
         },
-        {
-            "type": "text",
-            "caption": "Post with only text"
+        {   
+            "type": "image",
+            "src": "IMG_9408.jpg",
+            "caption": " ",
+            "album": "Sport"
+        },
+        {   
+            "type": "image",
+            "src": "IMG_9081 (1).jpg",
+            "caption": " ",
+            "album": "Photoshoot"
         },
         {
             "type": "image",
             "src": "202178_U18_EBC_ITA-ISR_Gamberini_Samuele_04.JPG",
-            "caption": "Post with image"
+            "caption": " ",
+            "album": "Sport"
+        },
+        {   
+            "type": "image",
+            "src": "IMG-20210819-WA0019.jpg",
+            "caption": " ",
+            "album": "Photoshoot"
         },
         {
             "type": "image",
-            "src": "202179_U18_EBC_SPA-GER_03.JPG",
-            "caption": "Post with image"
-        },
-        {
-            "type": "image",
-            "src": "202179_U18_EBC_SPA-GER_Hanson_Christopher_Jay.JPG",
-            "caption": "Post with image"
-        },
-        {
-            "type": "image",
-            "src": "DSC00724.jpg",
-            "caption": "Post with image"
-        },
-        {
-            "type": "image",
-            "src": "DSC00742.jpg",
-            "caption": "Post with image"
-        },
-        {
-            "type": "image",
-            "src": "DSC06942.JPG",
-            "caption": "Post with image"
-        },
-        {
-            "type": "image",
-            "src": "DSC09370.JPG",
-            "caption": "Post with image"
-        },
-        {
-            "type": "text",
-            "caption": "The End"
-        }        
-
+            "src": "IMG_8881.jpg",
+            "caption": " ",
+            "album": "Sport"
+        }
     ]
 }
